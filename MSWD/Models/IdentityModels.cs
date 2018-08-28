@@ -33,8 +33,49 @@ namespace MSWD.Models
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<RequirementAttachment> RequirementAttachments { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SeniorCitizen>()
+            .HasKey(s => s.SeniorCitizenId)
+            .HasRequired(s => s.Client)
+            .WithOptional(c => c.SeniorCitizen)
+            .Map(s => s.MapKey("ClientId"));
+
+            modelBuilder.Entity<Pwd>()
+            .HasKey(s => s.PwdId)
+            .HasRequired(s => s.Client)
+            .WithOptional(c => c.Pwd)
+            .Map(s => s.MapKey("ClientId"));
+
+            modelBuilder.Entity<SoloParent>()
+            .HasKey(s => s.SoloParentId)
+            .HasRequired(s => s.Client)
+            .WithOptional(c => c.SoloParent)
+            .Map(s=>s.MapKey("ClientId"));
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        /*
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // One to One
+            modelBuilder.Entity<Client>()
+                        .HasOptional(c => c.SeniorCitizen)
+                        .WithRequired(s => s.Client);
+
+            modelBuilder.Entity<Client>()
+                        .HasOptional(c => c.Pwd)
+                        .WithRequired(s => s.Client);
+
+            modelBuilder.Entity<Client>()
+                        .HasOptional(c => c.SoloParent)
+                        .WithRequired(s => s.Client);
+        }*/
+
         public static ApplicationDbContext Create()
         {
+
             return new ApplicationDbContext();
         }
     }

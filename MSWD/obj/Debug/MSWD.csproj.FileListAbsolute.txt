@@ -77,8 +77,8 @@ c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\bin\Microsoft.Owi
 c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\bin\Microsoft.Owin.Security.Google.xml
 c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\bin\Microsoft.Owin.Security.Twitter.xml
 c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.csprojResolveAssemblyReference.cache
 c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.dll
 c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.pdb
-c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.initial.resources
-c:\users\jerdz\documents\visual studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.csproj.GenerateResource.Cache
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.csprojResolveAssemblyReference.cache
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.first.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.csproj.GenerateResource.Cache
