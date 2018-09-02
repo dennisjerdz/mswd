@@ -1,5 +1,6 @@
 namespace MSWD.Migrations
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,6 +27,18 @@ namespace MSWD.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            /*seed cities*/
+            context.Cities.AddOrUpdate(
+                c => c.Name,
+                new City { Name = "Makati", DateCreated = DateTime.UtcNow.AddHours(8) },
+                new City { Name = "Mandaluyong", DateCreated = DateTime.UtcNow.AddHours(8) }
+            );
+
+            context.SaveChanges();
+
+            int makati_city = context.Cities.FirstOrDefault(c => c.Name == "Makati").CityId;
+            int mandaluyong_city = context.Cities.FirstOrDefault(c => c.Name == "Mandaluyong").CityId;
         }
     }
 }

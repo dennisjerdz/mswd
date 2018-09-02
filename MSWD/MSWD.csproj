@@ -196,14 +196,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SeniorCitizensController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808280114369_first.cs" />
-    <Compile Include="Migrations\201808280114369_first.Designer.cs">
-      <DependentUpon>201808280114369_first.cs</DependentUpon>
+    <Compile Include="Helper.cs" />
+    <Compile Include="Migrations\201809022011018_initial.cs" />
+    <Compile Include="Migrations\201809022011018_initial.Designer.cs">
+      <DependentUpon>201809022011018_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -216,6 +220,17 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datatable\dataTables.bootstrap.min.css" />
+    <Content Include="Content\datatable\jquery-ui.min.css" />
+    <Content Include="Content\sheetJS\cpexcel.js" />
+    <Content Include="Content\sheetJS\jszip.js" />
+    <Content Include="Content\sheetJS\shim.min.js" />
+    <Content Include="Content\sheetJS\xlsx.core.min.js" />
+    <Content Include="Content\sheetJS\xlsx.extendscript.js" />
+    <Content Include="Content\sheetJS\xlsx.full.min.js" />
+    <Content Include="Content\sheetJS\xlsx.js" />
+    <Content Include="Content\sheetJS\xlsx.min.js" />
+    <Content Include="Content\sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,7 +242,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\sheetJS\LICENSE" />
+    <Content Include="Content\sheetJS\xlsx.core.min.map" />
+    <Content Include="Content\sheetJS\xlsx.full.min.map" />
+    <Content Include="Content\sheetJS\xlsx.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\datatable\dataTables.bootstrap.js" />
+    <Content Include="Scripts\datatable\datatables.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -278,6 +299,16 @@
     <Content Include="Views\SeniorCitizens\Details.cshtml" />
     <Content Include="Views\SeniorCitizens\Edit.cshtml" />
     <Content Include="Views\SeniorCitizens\Index.cshtml" />
+    <Content Include="Views\Clients\Create.cshtml" />
+    <Content Include="Views\Clients\Delete.cshtml" />
+    <Content Include="Views\Clients\Details.cshtml" />
+    <Content Include="Views\Clients\Edit.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Cities\Create.cshtml" />
+    <Content Include="Views\Cities\Delete.cshtml" />
+    <Content Include="Views\Cities\Details.cshtml" />
+    <Content Include="Views\Cities\Edit.cshtml" />
+    <Content Include="Views\Cities\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -291,8 +322,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808280114369_first.resx">
-      <DependentUpon>201808280114369_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809022011018_initial.resx">
+      <DependentUpon>201809022011018_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -27,6 +27,10 @@ namespace MSWD.Models
         
         public DbSet<City> Cities { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<ClientNote> ClientNotes { get; set; }
+        public DbSet<ClientBeneficiary> ClientBeneficiary { get; set; }
+        public DbSet<MobileNumber> MobileNumbers { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<SeniorCitizen> SeniorCitizens { get; set; }
         public DbSet<Pwd> Pwds { get; set; }
         public DbSet<SoloParent> SoloParents { get; set; }

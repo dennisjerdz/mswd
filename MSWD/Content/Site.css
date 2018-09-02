@@ -1,12 +1,12 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    /*padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -20,5 +20,105 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
+    max-width:100%;
+}
+
+body >*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-brand{
+    color:#264b98;
+}
+
+.navbar{
+    margin-bottom:10px;
+    border:none;
+}
+
+.page-title{
+    font-size:1.6em;
+    color: #264b98;
+    line-height:40px;
+    padding-bottom:20px;
+    margin-bottom:40px;
+    box-shadow: 0px 10px 30px -16px rgba(90,90,90,0.2);
+}
+
+.red-highlight{
+    color: #b05050;
+}
+
+.btn-success {
+    color:#198741;
+    background-color:transparent;
+    transition:0.3s;
+}
+
+.btn-info {
+    color:#264b98;
+    background-color:transparent;
+    transition:0.3s;
+}
+
+.btn-warning{
+    color:#b26935;
+    background-color:transparent;
+    transition:0.3s;
+}
+
+.btn-danger{
+    color:#b93939;
+    background-color:transparent;
+    transition:0.3s;
+}
+
+.dropdown-menu{
+    padding:0px;
+    margin-top:10px;
+    box-shadow:0px 4px 15px -5px rgba(0,0,0,0.2) !important;
+}
+
+.dropdown-menu li a{
+    border-radius:0px;
+    line-height:40px;
+}
+
+.header-page a:hover, .header-page a:focus, .header-page a{
+    text-decoration:none !important;
+    transition:0.2s;
+}
+
+.control-label{
+    margin-bottom:8px !important;
+}
+
+.form-control{
+    border:none;
+    border-bottom:solid;
+    border-radius:0px;
+    border-bottom-width:1px;
+    box-shadow:none;
+    border-bottom-color:rgba(90,90,90,0.4);
+}
+
+.form-control:focus, .form-control:active{
+    transition:0.2s;
+    border-bottom-width:3px;
+    box-shadow:none;
+}
+
+.form-header h4{
+    font-weight:600;
+    color:#264b98;
+}
+
+.row-beneficiary{
+    padding-bottom:10px;
+    border-bottom-style:solid;
+    border-bottom-width:2px;
+    border-bottom-color:rgba(90,90,90,0.2);
+    margin-bottom:10px;
+
 }

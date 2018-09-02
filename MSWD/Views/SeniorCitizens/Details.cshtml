@@ -11,19 +11,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Client.GivenName)
+            @Html.DisplayNameFor(model => model.CreatedBy.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Client.GivenName)
+            @Html.DisplayFor(model => model.CreatedBy.Email)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ClientId)
+            @Html.DisplayNameFor(model => model.VerifiedBy.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ClientId)
+            @Html.DisplayFor(model => model.VerifiedBy.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
         </dd>
 
     </dl>

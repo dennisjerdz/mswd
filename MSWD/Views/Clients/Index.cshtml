@@ -1,0 +1,100 @@
+﻿@model IEnumerable<MSWD.Models.Client>
+
+@{
+    ViewBag.Title = "Clients";
+}
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-8">
+                @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+            </div>
+
+            <div class="col-md-4">
+                <div class="pull-right">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Add Client <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <ul class="dropdown-menu" style="right:0 !important; left:unset !important;" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Senior Citizen</a></li>
+                            <li><a href="#">PWD</a></li>
+                            <li><a href="#">Solo Parent</a></li>
+                            @if (User.IsInRole("Social Worker"))
+                            {
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">User</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <div class="col-md-12">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Gender)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CivilStatus)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Occupation)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Citizenship)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DateCreated)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+            {
+                            <tr>
+                                <td>
+                                    @item.getFullName()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CivilStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Occupation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Citizenship)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateCreated)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ClientId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.ClientId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ClientId })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
