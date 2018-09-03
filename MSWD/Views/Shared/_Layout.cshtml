@@ -17,13 +17,15 @@
 
         <div id="wrapper" class="">
             <div id="sidebar-wrapper" class="no-print">
+                <img class="sidebar-logo" style="width:100px;" src="@Url.Content("~/Content/logo.png")" />
+
                 <ul class="sidebar-nav">
                     <li><a href="@Url.Action("Index","Clients")">Clients</a></li>
                     <li><a href="@Url.Action("Index","SeniorCitizens")">Senior Citizens</a></li>
                     <li><a href="#">PWD</a></li>
                     <li><a href="#">Solo Parent</a></li>
                     <li><a href="#">Reports</a></li>
-                    <li><a href="#" style="color:#9bc5ff;">Hide Sidebar</a></li>
+                    <li><a class="menu-toggle" href="#" style="color:#9bc5ff;">Hide Sidebar</a></li>
                 </ul>
             </div>
 
@@ -53,6 +55,7 @@
                             <center>
                                 <hr />
                                 <footer>
+                                    <p>#: 899-8997 / 899-9037</p>
                                     <p>&copy; @DateTime.Now.Year - MSWD</p>
                                 </footer>
                             </center>
@@ -73,6 +76,10 @@
             $(".menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
+            });
+
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
             });
         </script>
 

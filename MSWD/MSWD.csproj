@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201809022011018_initial.Designer.cs">
       <DependentUpon>201809022011018_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809031156380_user-info.cs" />
+    <Compile Include="Migrations\201809031156380_user-info.Designer.cs">
+      <DependentUpon>201809031156380_user-info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClientModels.cs" />
@@ -222,6 +226,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datatable\dataTables.bootstrap.min.css" />
     <Content Include="Content\datatable\jquery-ui.min.css" />
+    <Content Include="Content\logo.png" />
     <Content Include="Content\sheetJS\cpexcel.js" />
     <Content Include="Content\sheetJS\jszip.js" />
     <Content Include="Content\sheetJS\shim.min.js" />
@@ -309,6 +314,7 @@
     <Content Include="Views\Cities\Details.cshtml" />
     <Content Include="Views\Cities\Edit.cshtml" />
     <Content Include="Views\Cities\Index.cshtml" />
+    <Content Include="Views\Clients\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,6 +330,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809022011018_initial.resx">
       <DependentUpon>201809022011018_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809031156380_user-info.resx">
+      <DependentUpon>201809031156380_user-info.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -152,7 +152,7 @@ namespace MSWD.Models
 
         [ForeignKey("CreatedBy")]
         public string CreatedByUserId { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
+        public virtual ApplicationUser CreatedBy { get; set; }
 
         public DateTime DateCreated { get; set; }
     }

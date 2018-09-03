@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MSWD.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MSWD.Controllers
 {
@@ -67,6 +68,82 @@ namespace MSWD.Controllers
             ViewBag.ClientId = new SelectList(db.SeniorCitizens, "SeniorCitizenId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SoloParents, "SoloParentId", "Status", client.ClientId);
             return View(client);
+        }
+
+        // GET: Clients/Details/5
+        public ActionResult Manage(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Client client = db.Clients.Find(id);
+            if (client == null)
+            {
+                return HttpNotFound();
+            }
+            return View(client);
+        }
+
+        [HttpPost]
+        public ActionResult AddNote()
+        {
+            int id = Convert.ToInt16(Request.Form["ClientId"]);
+            string Content = Request.Form["Content"];
+
+            Client client = db.Clients.Find(id);
+            if (client == null)
+            {
+                return HttpNotFound();
+            }
+
+            ClientNote cn = new ClientNote();
+            cn.ClientId = id;
+            cn.Note = Content;
+            cn.DateCreated = DateTime.UtcNow.AddHours(8);
+            cn.Done = 0;
+            cn.CreatedByUserId = User.Identity.GetUserId();
+
+            db.ClientNotes.Add(cn);
+            db.SaveChanges();
+
+            return RedirectToAction("Manage", "Clients", new { @id = id});
+        }
+
+        public ActionResult MarkDone(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ClientNote cn = db.ClientNotes.Find(id);
+            if (cn == null)
+            {
+                return HttpNotFound();
+            }
+
+            cn.Done = 1;
+            db.SaveChanges();
+
+            return RedirectToAction("Manage","Clients",new {  @id = cn.ClientId });
+        }
+
+        public ActionResult RemoveNote(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ClientNote cn = db.ClientNotes.Find(id);
+            if (cn == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.ClientNotes.Remove(cn);
+            db.SaveChanges();
+
+            return RedirectToAction("Manage", "Clients", new { @id = cn.ClientId });
         }
 
         // GET: Clients/Edit/5

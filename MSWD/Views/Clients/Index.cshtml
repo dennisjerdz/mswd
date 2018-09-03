@@ -7,11 +7,15 @@
 <div class="container">
     <div class="page-title">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
             </div>
 
             <div class="col-md-4">
+                <input class="form-control all-search" placeholder="Search" />
+            </div>
+
+            <div class="col-md-2">
                 <div class="pull-right">
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -54,7 +58,7 @@
                                 @Html.DisplayNameFor(model => model.Occupation)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Citizenship)
+                                Type
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.DateCreated)
@@ -65,7 +69,7 @@
 
                     <tbody>
                         @foreach (var item in Model)
-            {
+                        {
                             <tr>
                                 <td>
                                     @item.getFullName()
@@ -80,15 +84,41 @@
                                     @Html.DisplayFor(modelItem => item.Occupation)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Citizenship)
+                                    @if (item.SeniorCitizen != null)
+                                    {
+                                        <text>Senior Citizen</text>
+                                    }
+
+                                    @if (item.SoloParent != null)
+                                    {
+                                        <text>Solo Parent</text>
+                                    }
+
+                                    @if (item.Pwd != null)
+                                    {
+                                        <text>PWD</text>
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.DateCreated)
                                 </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.ClientId }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.ClientId }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.ClientId })
+                                <td class="content-align-right">
+                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Manage" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-edit"></span></a>
+                                    
+                                    @if (item.SeniorCitizen != null)
+                                    {
+                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Senior Citizen Info" href="@Url.Action("View","SeniorCitizens", new { @id = item.ClientId })"><span class="glyphicon glyphicon-share"></span></a>
+                                    }
+
+                                    @if (item.SoloParent != null)
+                                    {
+                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Solo Parent Info" href="@Url.Action("View","SoloParents", new { @id = item.ClientId })">View Solo Parent Info <span class="glyphicon glyphicon-share"></span></a>
+                                    }
+
+                                    @if (item.Pwd != null)
+                                    {
+                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="View PWD Info" href="@Url.Action("View","PWDs", new { @id = item.ClientId })"><span class="glyphicon glyphicon-share"></span></a>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -98,3 +128,22 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var datatable = $("table").DataTable({
+                paging: true,
+                "pageLength": 20,
+                "dom": "<'row'<'table-container'<'table-responsive'rt>>><'table-footer'<'col-md-6'i><'col-md-6'p>>",
+                "columnDefs": [
+                    { "orderable": false, "targets": 6 }
+                ]
+            });
+
+            $(".all-search").keyup(function () {
+                datatable.search($(this).val()).draw();
+            })
+        });
+    </script>
+}
