@@ -83,3 +83,4 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.cs
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.initial.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.csproj.GenerateResource.Cache
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.userinfo.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\bin\GlobeConnect.dll
