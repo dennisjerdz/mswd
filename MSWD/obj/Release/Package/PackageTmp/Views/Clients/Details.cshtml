@@ -1,0 +1,218 @@
+﻿@model MSWD.Models.Client
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.City.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pwd.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pwd.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeniorCitizen.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeniorCitizen.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoloParent.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoloParent.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GivenName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GivenName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SurName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SurName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CivilStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CivilStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Occupation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Occupation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Citizenship)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Citizenship)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CityAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProvincialAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProvincialAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfResidency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfResidency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartOfResidency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartOfResidency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthPlace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BirthPlace)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Religion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Religion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfMarriage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfMarriage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaceOfMarriage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceOfMarriage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpouseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpouseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpouseBirthDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpouseBirthDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ClientId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

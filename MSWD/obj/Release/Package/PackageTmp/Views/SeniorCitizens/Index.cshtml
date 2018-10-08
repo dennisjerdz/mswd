@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MSWD.Models.SeniorCitizen>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VerifiedBy.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VerifiedBy.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SeniorCitizenId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SeniorCitizenId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SeniorCitizenId })
+        </td>
+    </tr>
+}
+
+</table>

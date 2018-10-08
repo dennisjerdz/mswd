@@ -10,6 +10,7 @@ using MSWD.Models;
 
 namespace MSWD.Controllers
 {
+    [Authorize(Roles = "Social Worker,OIC")]
     public class SeniorCitizensController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

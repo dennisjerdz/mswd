@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace MSWD.Controllers
 {
+    [Authorize(Roles = "Social Worker,OIC")]
     public class ClientsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

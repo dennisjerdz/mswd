@@ -257,6 +257,8 @@
     <Content Include="Content\sheetJS\xlsx.core.min.map" />
     <Content Include="Content\sheetJS\xlsx.full.min.map" />
     <Content Include="Content\sheetJS\xlsx.min.map" />
+    <None Include="Properties\PublishProfiles\mswd - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mswd - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datatable\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatable\datatables.js" />
@@ -271,7 +273,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

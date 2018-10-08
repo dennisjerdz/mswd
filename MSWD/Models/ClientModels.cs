@@ -11,6 +11,7 @@ namespace MSWD.Models
     {
         public int CityId { get; set; }
         public string Name { get; set; }
+        [Display(Name ="Date Created")]
         public DateTime DateCreated { get; set; }
 
         public virtual List<Client> Clients { get; set; }
@@ -53,13 +54,17 @@ namespace MSWD.Models
 
         // Credentials
         [Required]
+        [Display(Name = "Given Name")]
         public string GivenName { get; set; }
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
         [Required]
+        [Display(Name = "Sur Name")]
         public string SurName { get; set; }
         [Required]
         public string Gender { get; set; } // Male, Female
         [Required]
+        [Display(Name = "Civil Status")]
         public string CivilStatus { get; set; } // Single, Married, Widowed, Divorced
 
         public string getFullName()
@@ -77,12 +82,17 @@ namespace MSWD.Models
         public virtual City City { get; set; }
 
         [Required]
+        [Display(Name = "City Address")]
         public string CityAddress { get; set; }
+        [Display(Name = "Provincial Address")]
         public string ProvincialAddress { get; set; }
+        [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
 
         // Residency
+        [Display(Name = "Type Of Residency")]
         public string TypeOfResidency { get; set; } // House Owner, Sharer, Lessee/Tenant, Boarder
+        [Display(Name = "Start Of Residency")]
         public DateTime? StartOfResidency { get; set; }
 
         public int getResidencyLength()
@@ -96,8 +106,10 @@ namespace MSWD.Models
 
         // Age
         [Required]
+        [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }
         [Required]
+        [Display(Name = "Birth Place")]
         public string BirthPlace { get; set; }
         public string Religion { get; set; }
 
@@ -111,16 +123,23 @@ namespace MSWD.Models
         }
 
         // Marriage
+        [Display(Name = "Date Of Marriage")]
         public DateTime? DateOfMarriage { get; set; }
+        [Display(Name = "Place Of Marriage")]
         public string PlaceOfMarriage { get; set; }
+        [Display(Name = "Spouse Name")]
         public string SpouseName { get; set; }
+        [Display(Name = "Spouse Birth Date")]
         public DateTime? SpouseBirthDate { get; set; }
+        [Display(Name = "Spouse Blu Card No")]
         public string SpouseBluCardNo { get; set; }
 
         [ForeignKey("CreatedBy")]
         public string CreatedByUserId { get; set; }
+        [Display(Name = "Created By")]
         public ApplicationUser CreatedBy { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         //[ForeignKey("SeniorCitizen")]
@@ -152,8 +171,10 @@ namespace MSWD.Models
 
         [ForeignKey("CreatedBy")]
         public string CreatedByUserId { get; set; }
+        [Display(Name = "Created By")]
         public virtual ApplicationUser CreatedBy { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
     }
 
@@ -167,7 +188,9 @@ namespace MSWD.Models
         public string Name { get; set; }
         public string Relationship { get; set; }
         public DateTime? BirthDate { get; set; }
+        [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
+        [Display(Name = "Civil Status")]
         public string CivilStatus { get; set; } // Single, Married, Widowed, Divorced
         public string Occupation { get; set; }
         public string Income { get; set; }
@@ -195,6 +218,7 @@ namespace MSWD.Models
 
         [ForeignKey("VerifiedBy")]
         public string VerifiedByUserId { get; set; }
+        [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
 
         public virtual Client Client { get; set; }
@@ -209,12 +233,15 @@ namespace MSWD.Models
 
         [ForeignKey("CreatedBy")]
         public string CreatedByUserId { get; set; }
+        [Display(Name = "Created By")]
         public ApplicationUser CreatedBy { get; set; }
 
         [ForeignKey("VerifiedBy")]
         public string VerifiedByUserId { get; set; }
+        [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         public virtual Client Client { get; set; }
@@ -229,10 +256,12 @@ namespace MSWD.Models
 
         [ForeignKey("CreatedBy")]
         public string CreatedByUserId { get; set; }
+        [Display(Name = "Created By")]
         public ApplicationUser CreatedBy { get; set; }
 
         [ForeignKey("VerifiedBy")]
         public string VerifiedByUserId { get; set; }
+        [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
 
         public virtual Client Client { get; set; }
@@ -256,6 +285,7 @@ namespace MSWD.Models
         public int RequirementAttachmentId { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         public int RequirementId { get; set; }
@@ -269,11 +299,13 @@ namespace MSWD.Models
         [Required]
         public string MobileNo { get; set; }
         public string Token { get; set; }
+        [Display(Name = "Is Disabled")]
         public bool IsDisabled { get; set; }
 
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         public virtual List<Message> Messages { get; set; }
@@ -297,13 +329,17 @@ namespace MSWD.Models
         }
 
         [Required]
+        [Display(Name = "Given Name")]
         public string GivenName { get; set; }
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
         [Required]
+        [Display(Name = "Sur Name")]
         public string SurName { get; set; }
         [Required]
         public string Gender { get; set; } // Male, Female
         [Required]
+        [Display(Name = "Civil Status")]
         public string CivilStatus { get; set; } // Single, Married, Widowed, Divorced
 
         // Work
@@ -316,26 +352,38 @@ namespace MSWD.Models
         public virtual City City { get; set; }
 
         [Required]
+        [Display(Name = "City Address")]
         public string CityAddress { get; set; }
+        [Display(Name = "Provincial Address")]
         public string ProvincialAddress { get; set; }
+        [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
 
         // Residency
+        [Display(Name = "Type Of Residency")]
         public string TypeOfResidency { get; set; } // House Owner, Sharer, Lessee/Tenant, Boarder
+        [Display(Name = "Start Of Residency")]
         public DateTime? StartOfResidency { get; set; }
 
         // Age
         [Required]
+        [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }
         [Required]
+        [Display(Name = "Birth Place")]
         public string BirthPlace { get; set; }
         public string Religion { get; set; }
 
         // Marriage
+        [Display(Name = "Date Of Marriage")]
         public DateTime? DateOfMarriage { get; set; }
+        [Display(Name = "Place Of Marriage")]
         public string PlaceOfMarriage { get; set; }
+        [Display(Name = "Spouse Name")]
         public string SpouseName { get; set; }
+        [Display(Name = "Spouse Birth Date")]
         public DateTime? SpouseBirthDate { get; set; }
+        [Display(Name = "Spouse Blu Card No")]
         public string SpouseBluCardNo { get; set; }
 
         // User who entered
