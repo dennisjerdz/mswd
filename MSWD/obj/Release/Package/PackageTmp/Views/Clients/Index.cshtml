@@ -22,7 +22,7 @@
                             Add Client <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <ul class="dropdown-menu" style="right:0 !important; left:unset !important;" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Senior Citizen</a></li>
+                            <li><a href="@Url.Action("Create","SeniorCitizens", new { })">Senior Citizen</a></li>
                             <li><a href="#">PWD</a></li>
                             <li><a href="#">Solo Parent</a></li>
                             @if (User.IsInRole("Social Worker"))

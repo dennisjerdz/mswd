@@ -80,6 +80,8 @@
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.ClientId)
+                    @Html.HiddenFor(model => model.DateCreated)
+                    @Html.HiddenFor(model => model.CityId)
 
                     <div class="form-group">
                         <div class="form-header">
@@ -242,54 +244,62 @@
                             </div>
                         </div>
 
-                        <div class="row-beneficiary">
-                            <div class="form-group">
+                        @if (Model.ClientBeneficiaries.Count != 0)
+                        {
+                            for (int i = 0; i < Model.ClientBeneficiaries.Count; i++)
+                            {
+                                <div class="row-beneficiary">
+                                    @Html.HiddenFor(model => model.ClientBeneficiaries[i].ClientBeneficiaryId)
+                                    @Html.HiddenFor(model => model.ClientBeneficiaries[i].ClientId)
 
-                                <div class="col-md-6">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].Name, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].Name, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].Name, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].Name, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].Name, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].Name, "", new { @class = "text-danger" })
+                                        </div>
 
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].Relationship, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].Relationship, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].Relationship, "", new { @class = "text-danger" })
-                                </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].Relationship, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].Relationship, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].Relationship, "", new { @class = "text-danger" })
+                                        </div>
 
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].BirthDate, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].BirthDate, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].BirthDate, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].BirthDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
 
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].ContactNumber, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].ContactNumber, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].ContactNumber, htmlAttributes: new { @class = "control-label", @style = "font-size:0.8em;" })
+                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].ContactNumber, "", new { @class = "text-danger" })
+                                        </div>
 
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].CivilStatus, htmlAttributes: new { @class = "control-label" })
-                                    @Html.DropDownListFor(model => model.ClientBeneficiaries[0].CivilStatus, lists.CivilStatusList, "-- Select Residency Type --", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].CivilStatus, "", new { @class = "text-danger" })
-                                </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].CivilStatus, htmlAttributes: new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.ClientBeneficiaries[i].CivilStatus, lists.CivilStatusList, "-- Select Residency Type --", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].CivilStatus, "", new { @class = "text-danger" })
+                                        </div>
 
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].Occupation, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].Occupation, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].Occupation, "", new { @class = "text-danger" })
-                                </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].Occupation, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].Occupation, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].Occupation, "", new { @class = "text-danger" })
+                                        </div>
 
-                                <div class="col-md-3">
-                                    @Html.LabelFor(model => model.ClientBeneficiaries[0].Income, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].Income, new { htmlAttributes = new { @class = "form-control", @type = "Number" } })
-                                    @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].Income, "", new { @class = "text-danger" })
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].Income, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].Income, new { htmlAttributes = new { @class = "form-control", @type = "Number" } })
+                                            @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].Income, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            }
+                        }
                     </div>
 
                     <div class="form-group">
@@ -469,6 +479,7 @@
 
             var html =
                 "<div class='row-beneficiary'>" +
+                    "<input type='hidden' name='ClientBeneficiaries["+i+"].ClientId' value='@Model.ClientId'>"+
                     "<div class='form-group'>" +
                         "<div class='col-md-6'>" +
                             "<label class='control-label'>Name</label>" +

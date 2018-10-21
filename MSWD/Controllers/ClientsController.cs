@@ -87,6 +87,68 @@ namespace MSWD.Controllers
         }
 
         [HttpPost]
+        public ActionResult Manage([Bind(Include = "ClientId,GivenName,MiddleName,SurName,Gender,CivilStatus,Occupation,Citizenship,CityId,CityAddress,ProvincialAddress,ContactNumber,TypeOfResidency,StartOfResidency,BirthDate,BirthPlace,Religion,DateOfMarriage,PlaceOfMarriage,SpouseName,SpouseBirthDate,CreatedByUserId,DateCreated,ClientBeneficiaries")] Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                //Client dbClient = db.Clients.FirstOrDefault(c => c.ClientId == client.ClientId);
+                //db.ClientBeneficiary.RemoveRange(dbClient.ClientBeneficiaries);
+
+                /*if (db.Entry(client).Entity.ClientBeneficiaries != null) {
+                    db.ClientBeneficiary.RemoveRange(db.Entry(client).Entity.ClientBeneficiaries);
+                }*/
+
+                /*
+                if (client.ClientBeneficiaries != null)
+                {
+                    foreach (var item in client.ClientBeneficiaries)
+                    {
+                        if (db.ClientBeneficiary.FirstOrDefault(b=>b.ClientBeneficiaryId == item.ClientBeneficiaryId) != null) {
+                            // db.Entry(item).State = EntityState.Modified;
+                        }else
+                        {
+                            item.ClientId = client.ClientId;
+                            db.ClientBeneficiary.Add(item);
+                        }
+                    }
+                }
+                
+                db.SaveChanges();
+                */
+
+                var parentEntry = db.Entry(client);
+                parentEntry.State = EntityState.Modified;
+
+                int[] dbChildEntities = db.ClientBeneficiary.Where(b => b.ClientId == client.ClientId).Select(c=>c.ClientBeneficiaryId).ToArray();
+
+                foreach (var item in client.ClientBeneficiaries)
+                {
+                    if (dbChildEntities.Contains(item.ClientBeneficiaryId)) {
+                        db.Entry(item).State = EntityState.Modified;
+                    }else
+                    {
+                        db.ClientBeneficiary.Add(item);
+                    }
+                }
+
+                int[] childEntities = client.ClientBeneficiaries.Select(c => c.ClientBeneficiaryId).ToArray();
+
+                var deleteChildEntities = db.ClientBeneficiary.Where(b => !childEntities.Contains(b.ClientBeneficiaryId));
+
+                db.ClientBeneficiary.RemoveRange(deleteChildEntities);
+
+                /*foreach (var item in client.ClientBeneficiaries) {
+                    db.Entry(item).State = EntityState.Modified;
+                }*/
+
+                db.SaveChanges();
+                return RedirectToAction("Manage",new { @id=client.ClientId });
+            }
+
+            return View(client);
+        }
+
+        [HttpPost]
         public ActionResult AddNote()
         {
             int id = Convert.ToInt16(Request.Form["ClientId"]);
