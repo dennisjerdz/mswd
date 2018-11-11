@@ -257,7 +257,9 @@
     <Content Include="Content\sheetJS\xlsx.core.min.map" />
     <Content Include="Content\sheetJS\xlsx.full.min.map" />
     <Content Include="Content\sheetJS\xlsx.min.map" />
+    <None Include="Properties\PublishProfiles\mswd - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mswd - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datatable\dataTables.bootstrap.js" />
@@ -325,6 +327,7 @@
     <Content Include="Views\Cities\Edit.cshtml" />
     <Content Include="Views\Cities\Index.cshtml" />
     <Content Include="Views\Clients\Manage.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

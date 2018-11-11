@@ -322,6 +322,31 @@ namespace MSWD.Models
         public DateTime DateCreated { get; set; }
     }
 
+    public class Inquiry
+    {
+        public int InquiryId { get; set; }
+        public int ClientId { get; set; }
+        public int? MessageId { get; set; }
+        public string Status { get; set; }
+        public string Resolution { get; set; }
+
+        public DateTime DateCreated { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Message Message { get; set; }
+    }
+
+    public class InquiryNote
+    {
+        public int InquiryNoteId { get; set; }
+        public int InquiryId { get; set; }
+
+        public string UserName { get; set; }
+        public string Content { get; set; }
+
+        public virtual Inquiry Inquiry { get; set; }
+        public DateTime DateCreated { get; set; }
+    }
+
     public class ClientEditModel
     {
         public ClientEditModel() {
