@@ -55,6 +55,11 @@ namespace MSWD.Migrations
                 var role = new IdentityRole { Name = "OIC" };
                 roleManager.Create(role);
             }
+            if (!context.Roles.Any(r => r.Name == "Client"))
+            {
+                var role = new IdentityRole { Name = "Client" };
+                roleManager.Create(role);
+            }
 
             /*seed accounts*/
             var userStore = new UserStore<ApplicationUser>(context);

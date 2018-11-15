@@ -1,0 +1,153 @@
+﻿@model IEnumerable<MSWD.Models.Requirement>
+
+@{
+    ViewBag.Title = "Requirements";
+}
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-6">
+                @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+            </div>
+
+            <div class="col-md-4">
+                <input class="form-control all-search" placeholder="Search" />
+            </div>
+
+            @*
+            <div class="col-md-2">
+                <div class="pull-right">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Add Client <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <ul class="dropdown-menu" style="right:0 !important; left:unset !important;" aria-labelledby="dropdownMenu1">
+                            <li><a href="@Url.Action("Create","SeniorCitizens", new { })">Senior Citizen</a></li>
+                            <li><a href="#">PWD</a></li>
+                            <li><a href="#">Solo Parent</a></li>
+                            @if (User.IsInRole("Social Worker"))
+                            {
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">User</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            *@
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <div class="col-md-12">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Last Comment
+                            </th>
+                            <th>
+                                # of Attachments
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                Recent Photo
+                            </td>
+                            <td>
+                                11-15-2018
+                            </td>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Pending
+                            </td>
+                            <td class="content-align-right">
+                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="$" href="#"><span class="glyphicon glyphicon-question-sign"></span></a>
+                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Attachments" href="#"><span class="glyphicon glyphicon-upload"></span></a>
+                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Comments" href="#"><span class="glyphicon glyphicon-exclamation-sign"></span></a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Supporting Document
+                            </td>
+                            <td>
+                                11-15-2018
+                            </td>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                Pending
+                            </td>
+                            <td class="content-align-right">
+                                <a class="btn btn-warning btn-sm" data-toggle="tooltip" title="Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" href="#"><span class="glyphicon glyphicon-question-sign"></span></a>
+                                <a class="btn btn-info btn-sm" data-toggle="tooltip" title="Attachments" href="#"><span class="glyphicon glyphicon-upload"></span></a>
+                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Comments" href="#"><span class="glyphicon glyphicon-exclamation-sign"></span></a>
+                            </td>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Comments.LastOrDefault().DateTimeCreated
+                                </td>
+                                <td>
+                                    @item.Attachments.Count()
+                                </td>
+                                <td>
+                                    @item.IsDone
+                                </td>
+                                <td class="content-align-right">
+                                    <a class="btn btn-warning btn-sm" data-toggle="tooltip" title="@item.Description" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-question-sign"></span></a>
+                                    <a class="btn btn-info btn-sm" data-toggle="tooltip" title="Attachments" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-upload"></span></a>
+                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Comments" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-exclamation-sign"></span></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var datatable = $("table").DataTable({
+                paging: true,
+                "pageLength": 20,
+                "dom": "<'row'<'table-container'<'table-responsive'rt>>><'table-footer'<'col-md-6'i><'col-md-6'p>>",
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 }
+                ]
+            });
+
+            $(".all-search").keyup(function () {
+                datatable.search($(this).val()).draw();
+            })
+        });
+    </script>
+}

@@ -18,6 +18,8 @@ namespace MSWD.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public AccountController()
         {
         }
@@ -151,10 +153,13 @@ namespace MSWD.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                int mktCityId = db.Cities.FirstOrDefault(c => c.Name == "Makati").CityId;
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, GivenName = model.GivenName, MiddleName = model.MiddleName, LastName = model.LastName, CityId = mktCityId};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "Client");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -163,7 +168,7 @@ namespace MSWD.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Apply", "Clients");
                 }
                 AddErrors(result);
             }

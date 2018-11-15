@@ -219,6 +219,14 @@
     <Compile Include="Migrations\201809031156380_user-info.Designer.cs">
       <DependentUpon>201809031156380_user-info.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811142115294_clientLogin.cs" />
+    <Compile Include="Migrations\201811142115294_clientLogin.Designer.cs">
+      <DependentUpon>201811142115294_clientLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811152119338_RequirementComments.cs" />
+    <Compile Include="Migrations\201811152119338_RequirementComments.Designer.cs">
+      <DependentUpon>201811152119338_RequirementComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClientModels.cs" />
@@ -328,6 +336,11 @@
     <Content Include="Views\Cities\Index.cshtml" />
     <Content Include="Views\Clients\Manage.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Clients\Apply.cshtml" />
+    <Content Include="Views\Clients\ApplySC.cshtml" />
+    <Content Include="Views\Clients\ApplyPwd.cshtml" />
+    <Content Include="Views\Clients\ApplySP.cshtml" />
+    <Content Include="Views\Clients\Requirements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,6 +360,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809031156380_user-info.resx">
       <DependentUpon>201809031156380_user-info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811142115294_clientLogin.resx">
+      <DependentUpon>201811142115294_clientLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811152119338_RequirementComments.resx">
+      <DependentUpon>201811152119338_RequirementComments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

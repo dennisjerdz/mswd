@@ -8,10 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using MSWD.Models;
 using Microsoft.AspNet.Identity;
+using System.Security.Principal;
+using System.Security.Claims;
 
 namespace MSWD.Controllers
 {
-    [Authorize(Roles = "Social Worker,OIC")]
+    [Authorize(Roles = "Social Worker,OIC,Client")]
     public class ClientsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -19,7 +21,7 @@ namespace MSWD.Controllers
         // GET: Clients
         public ActionResult Index()
         {
-            var clients = db.Clients.Include(c => c.City).Include(c => c.CreatedBy).Include(c => c.Pwd).Include(c => c.SeniorCitizen).Include(c => c.SoloParent);
+            var clients = db.Clients.Include(c => c.City).Include(c => c.Pwd).Include(c => c.SeniorCitizen).Include(c => c.SoloParent);
             return View(clients.ToList());
         }
 
@@ -64,7 +66,7 @@ namespace MSWD.Controllers
             }
 
             ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", client.CityId);
-            ViewBag.CreatedByUserId = new SelectList(db.Users, "Id", "Email", client.CreatedByUserId);
+            //ViewBag.CreatedByUserId = new SelectList(db.Users, "Id", "Email", client.CreatedByUserId);
             ViewBag.ClientId = new SelectList(db.Pwds, "PwdId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SeniorCitizens, "SeniorCitizenId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SoloParents, "SoloParentId", "Status", client.ClientId);
@@ -222,7 +224,7 @@ namespace MSWD.Controllers
                 return HttpNotFound();
             }
             ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", client.CityId);
-            ViewBag.CreatedByUserId = new SelectList(db.Users, "Id", "Email", client.CreatedByUserId);
+            //ViewBag.CreatedByUserId = new SelectList(db.Users, "Id", "Email", client.CreatedByUserId);
             ViewBag.ClientId = new SelectList(db.Pwds, "PwdId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SeniorCitizens, "SeniorCitizenId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SoloParents, "SoloParentId", "Status", client.ClientId);
@@ -243,7 +245,7 @@ namespace MSWD.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", client.CityId);
-            ViewBag.CreatedByUserId = new SelectList(db.Users, "Id", "Email", client.CreatedByUserId);
+            //ViewBag.CreatedByUserId = new SelectList(db.Users, "Id", "Email", client.CreatedByUserId);
             ViewBag.ClientId = new SelectList(db.Pwds, "PwdId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SeniorCitizens, "SeniorCitizenId", "Status", client.ClientId);
             ViewBag.ClientId = new SelectList(db.SoloParents, "SoloParentId", "Status", client.ClientId);
@@ -274,6 +276,110 @@ namespace MSWD.Controllers
             db.Clients.Remove(client);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Apply()
+        {
+            string email = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+            return View(au);
+        }
+
+        [Route("SeniorCitizen/Apply")]
+        public ActionResult ApplySC()
+        {
+            string username = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            ClientEditModel ce = new ClientEditModel();
+            ce.GivenName = au.GivenName;
+            ce.MiddleName = au.MiddleName;
+            ce.SurName = au.LastName;
+
+            return View(ce);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("SeniorCitizen/Apply")]
+        public ActionResult ApplySC(ClientEditModel ce)
+        {
+            Client newClient = new Client(ce);
+
+            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+
+            newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c=>c.Type=="CityId").Value);
+            newClient.DateCreated = DateTime.UtcNow.AddHours(8);
+
+            db.Clients.Add(newClient);
+
+            SeniorCitizen newSC = new SeniorCitizen();
+            newSC.Status = "Pending";
+            newSC.Client = newClient;
+
+            db.SeniorCitizens.Add(newSC);
+
+            ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+            ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+
+            string email = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+
+            au.ClientId = newClient.ClientId;
+
+            List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = newClient.ClientId, Name = "Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = newClient.ClientId, Name = "Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
+            };
+
+            db.Requirements.AddRange(rl);
+
+            if (db.SaveChanges() > 1)
+            {
+                return RedirectToAction("Requirements", "Clients", null);
+            }
+            else
+            {
+                return View(ce);
+            }
+        }
+
+        [Route("Pwd/Apply")]
+        public ActionResult ApplyPwd()
+        {
+            string username = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            ClientEditModel ce = new ClientEditModel();
+            ce.GivenName = au.GivenName;
+            ce.MiddleName = au.MiddleName;
+            ce.SurName = au.LastName;
+
+            return View(ce);
+        }
+
+        [Route("SoloParent/Apply")]
+        public ActionResult ApplySP()
+        {
+            string username = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            ClientEditModel ce = new ClientEditModel();
+            ce.GivenName = au.GivenName;
+            ce.MiddleName = au.MiddleName;
+            ce.SurName = au.LastName;
+
+            return View(ce);
+        }
+
+        public ActionResult Requirements()
+        {
+            string email = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+
+            List<Requirement> rl = au.Client.Requirements.ToList();
+            return View(rl);
         }
 
         protected override void Dispose(bool disposing)

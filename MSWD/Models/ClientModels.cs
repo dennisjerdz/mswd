@@ -134,10 +134,10 @@ namespace MSWD.Models
         [Display(Name = "Spouse Blu Card No")]
         public string SpouseBluCardNo { get; set; }
 
-        [ForeignKey("CreatedBy")]
-        public string CreatedByUserId { get; set; }
-        [Display(Name = "Created By")]
-        public ApplicationUser CreatedBy { get; set; }
+        //[ForeignKey("CreatedBy")]
+        //public string CreatedBy { get; set; }
+        //[Display(Name = "Created By")]
+        //public ApplicationUser CreatedBy { get; set; }
 
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
@@ -278,6 +278,22 @@ namespace MSWD.Models
         public virtual Client Client { get; set; }
 
         public virtual List<RequirementAttachment> Attachments { get; set; }
+        public virtual List<RequirementComment> Comments { get; set; }
+    }
+
+    public class RequirementComment
+    {
+        public int RequirementCommentId { get; set; }
+
+        public string Content { get; set; }
+
+        public DateTime DateTimeCreated { get; set; }
+
+        public int RequirementId { get; set; }
+        public virtual Requirement Requirement { get; set; }
+
+        public string CreatedById { get; set; }
+        public ApplicationUser CreatedBy { get; set; }
     }
 
     public class RequirementAttachment

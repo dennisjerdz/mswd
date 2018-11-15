@@ -64,6 +64,13 @@ namespace MSWD.Models
 
     public class RegisterViewModel
     {
+        [Display(Name = "Given Name")]
+        public string GivenName { get; set; }
+        [Display(Name = "Middle Name (Optional)")]
+        public string MiddleName { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

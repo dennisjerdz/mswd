@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace MSWD.Models
 {
@@ -15,6 +16,9 @@ namespace MSWD.Models
 
         public int? ClientId { get; set; }
         public virtual Client Client { get; set; }
+
+        public string CreatedByUserId { get; set; }
+        public virtual ApplicationUser CreatedBy { get; set; }
 
         [Required]
         [Display(Name = "Given Name")]
@@ -36,9 +40,13 @@ namespace MSWD.Models
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            City mktCity = db.Cities.FirstOrDefault(c => c.Name == "Makati");
+
             // Add custom user claims here
             userIdentity.AddClaim(new Claim("CityId", this.CityId.ToString()));
-            userIdentity.AddClaim(new Claim("CityName", this.City.Name.ToString()));
+            userIdentity.AddClaim(new Claim("CityName", mktCity.Name.ToString()));
             userIdentity.AddClaim(new Claim("FullName", this.getFullName()));
 
             return userIdentity;
