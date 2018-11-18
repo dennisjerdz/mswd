@@ -8,7 +8,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-md-12 header-page">
-                <a href="@Url.Action("Index")">@ViewBag.Title</a>&emsp;>&emsp;<font class="red-highlight">Apply (Click one of the options to start)</font>
+                <a href="#">@ViewBag.Title</a>&emsp;>&emsp;<font class="red-highlight">Apply (Click one of the options to start)</font>
             </div>
 
             @*
@@ -64,7 +64,16 @@
                         <li>Birth certificate/s of your child/children</li>
                         <li>Filled up Solo Parent ID application form</li>
                     </ol>
-                    <a href="@Url.Action("ApplySP","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    @if (Model.Client.SoloParent == null)
+                    {
+                        <a href="@Url.Action("ApplySP","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    }
+                    else
+                    {
+                        <div class="alert mswd-alert mswd-marginTop25">
+                            You've already applied for Solo Parent, <a href="@Url.Action("Requirements")">click this link</a> to upload requirements.
+                        </div>
+                    }
                 </div>
                 <div class="mswd-accordion once collapse" id="seniorCitizenCollapse">
                     <h3>Senior Citizen Requirements</h3>
@@ -72,7 +81,16 @@
                         <li>Recent Photograph (1x1 or 2x2)</li>
                         <li>Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance</li>
                     </ol>
-                    <a href="@Url.Action("ApplySC","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    @if (Model.Client.SeniorCitizen == null)
+                    {
+                        <a href="@Url.Action("ApplySC","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    }
+                    else
+                    {
+                        <div class="alert mswd-alert mswd-marginTop25">
+                            You've already applied for Senior Citizen, <a href="@Url.Action("Requirements")">click this link</a> to upload requirements.
+                        </div>
+                    }
                 </div>
                 <div class="mswd-accordion once collapse" id="pwdCollapse">
                     <h3>Person with Disability Requirements</h3>
@@ -82,7 +100,17 @@
                         <li>Recent Photograph (1x1 or 2x2)</li>
                         <li>Authorization Letter (if you're applying for somebody else)</li>
                     </ol>
-                    <a href="@Url.Action("ApplyPwd","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    @if (Model.Client.Pwd == null)
+                    {
+                        <a href="@Url.Action("ApplyPwd","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    }
+                    else
+                    {
+                        <div class="alert mswd-alert mswd-marginTop25">
+                            You've already applied for PWD, <a href="@Url.Action("Requirements")">click this link</a> to upload requirements.
+                        </div>
+                    }
+                    
                 </div>
             </div>
         </div>

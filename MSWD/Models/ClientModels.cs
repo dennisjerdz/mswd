@@ -221,6 +221,8 @@ namespace MSWD.Models
         [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
 
+        public DateTime? InterviewDate { get; set; }
+
         public virtual Client Client { get; set; }
     }
 
@@ -244,6 +246,8 @@ namespace MSWD.Models
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
+        public DateTime? InterviewDate { get; set; }
+
         public virtual Client Client { get; set; }
     }
 
@@ -263,6 +267,8 @@ namespace MSWD.Models
         public string VerifiedByUserId { get; set; }
         [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
+
+        public DateTime? InterviewDate { get; set; }
 
         public virtual Client Client { get; set; }
     }

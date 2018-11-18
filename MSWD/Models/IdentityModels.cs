@@ -71,6 +71,7 @@ namespace MSWD.Models
         public DbSet<SoloParent> SoloParents { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<RequirementAttachment> RequirementAttachments { get; set; }
+        public DbSet<RequirementComment> RequirementComments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

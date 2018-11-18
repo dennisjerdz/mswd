@@ -7,7 +7,7 @@
 <div class="container">
     <div class="page-title">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
             </div>
 
@@ -64,46 +64,7 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>
-                                Recent Photo
-                            </td>
-                            <td>
-                                11-15-2018
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                Pending
-                            </td>
-                            <td class="content-align-right">
-                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="$" href="#"><span class="glyphicon glyphicon-question-sign"></span></a>
-                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Attachments" href="#"><span class="glyphicon glyphicon-upload"></span></a>
-                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Comments" href="#"><span class="glyphicon glyphicon-exclamation-sign"></span></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                Supporting Document
-                            </td>
-                            <td>
-                                11-15-2018
-                            </td>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                Pending
-                            </td>
-                            <td class="content-align-right">
-                                <a class="btn btn-warning btn-sm" data-toggle="tooltip" title="Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" href="#"><span class="glyphicon glyphicon-question-sign"></span></a>
-                                <a class="btn btn-info btn-sm" data-toggle="tooltip" title="Attachments" href="#"><span class="glyphicon glyphicon-upload"></span></a>
-                                <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Comments" href="#"><span class="glyphicon glyphicon-exclamation-sign"></span></a>
-                            </td>
-                        </tr>
-
+                        
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -111,18 +72,42 @@
                                     @item.Name
                                 </td>
                                 <td>
-                                    @item.Comments.LastOrDefault().DateTimeCreated
+                                    @if (item.Comments.Count() > 0)
+                                    {
+                                        <text>@item.Comments.LastOrDefault().DateTimeCreated</text>
+                                    }else
+                                    {
+                                        <text>N/A</text>
+                                    }
                                 </td>
                                 <td>
                                     @item.Attachments.Count()
                                 </td>
                                 <td>
-                                    @item.IsDone
+                                    @if (item.IsDone)
+                                    {
+                                        <font class="mswd-green-txt">Approved</font>
+                                    }
+                                    else
+                                    {
+                                        <font class="mswd-orange-txt">Pending</font>
+                                    }
                                 </td>
                                 <td class="content-align-right">
-                                    <a class="btn btn-warning btn-sm" data-toggle="tooltip" title="@item.Description" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-question-sign"></span></a>
-                                    <a class="btn btn-info btn-sm" data-toggle="tooltip" title="Attachments" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-upload"></span></a>
-                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Comments" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-exclamation-sign"></span></a>
+                                    <a class="btn btn-warning btn-sm" data-toggle="tooltip" title="@item.Description" href="#"><span class="glyphicon glyphicon-question-sign"></span></a>
+                                    <a class="btn btn-info btn-sm" data-toggle="tooltip" title="Attachments & Comments" href="@Url.Action("Details","Requirements", new { @id = item.RequirementId })"><span class="glyphicon glyphicon-book"></span></a>
+
+                                    @if (User.IsInRole("Social Worker") || User.IsInRole("OIC"))
+                                    {
+                                        if (!item.IsDone)
+                                        {
+                                            <a class="btn btn-success btn-sm" data-toggle="tooltip" title="Mark as Approved" href="@Url.Action("ApproveRequirement","Requirements", new { @id=item.RequirementId })"><span class="glyphicon glyphicon-check"></span></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-danger btn-sm" data-toggle="tooltip" title="Revert Approval" href="@Url.Action("RevertRequirement","Requirements", new { @id=item.RequirementId })"><span class="glyphicon glyphicon-unchecked"></span></a>
+                                        }
+                                    }
                                 </td>
                             </tr>
                         }

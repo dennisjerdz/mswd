@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\SeniorCitizensController.cs" />
     <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Global.asax.cs">
@@ -226,6 +227,10 @@
     <Compile Include="Migrations\201811152119338_RequirementComments.cs" />
     <Compile Include="Migrations\201811152119338_RequirementComments.Designer.cs">
       <DependentUpon>201811152119338_RequirementComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811171223360_interviewDate.cs" />
+    <Compile Include="Migrations\201811171223360_interviewDate.Designer.cs">
+      <DependentUpon>201811171223360_interviewDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -341,6 +346,11 @@
     <Content Include="Views\Clients\ApplyPwd.cshtml" />
     <Content Include="Views\Clients\ApplySP.cshtml" />
     <Content Include="Views\Clients\Requirements.cshtml" />
+    <Content Include="Views\Requirements\Create.cshtml" />
+    <Content Include="Views\Requirements\Delete.cshtml" />
+    <Content Include="Views\Requirements\Details.cshtml" />
+    <Content Include="Views\Requirements\Edit.cshtml" />
+    <Content Include="Views\Requirements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -366,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811152119338_RequirementComments.resx">
       <DependentUpon>201811152119338_RequirementComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811171223360_interviewDate.resx">
+      <DependentUpon>201811171223360_interviewDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

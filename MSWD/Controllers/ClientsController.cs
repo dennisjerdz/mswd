@@ -288,8 +288,14 @@ namespace MSWD.Controllers
         [Route("SeniorCitizen/Apply")]
         public ActionResult ApplySC()
         {
+            
             string username = User.Identity.GetUserName();
             ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            if (au.Client.SeniorCitizen == null)
+            {
+                return RedirectToAction("Apply");
+            }
 
             ClientEditModel ce = new ClientEditModel();
             ce.GivenName = au.GivenName;
@@ -329,8 +335,8 @@ namespace MSWD.Controllers
             au.ClientId = newClient.ClientId;
 
             List<Requirement> rl = new List<Requirement>{
-                    new Requirement { ClientId = newClient.ClientId, Name = "Recent Photo", Description = "Upload a recent picture of yourself" },
-                    new Requirement { ClientId = newClient.ClientId, Name = "Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
             };
 
             db.Requirements.AddRange(rl);
@@ -373,13 +379,30 @@ namespace MSWD.Controllers
             return View(ce);
         }
 
-        public ActionResult Requirements()
+        public ActionResult Requirements(int? clientID)
         {
-            string email = User.Identity.GetUserName();
-            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+            if (clientID != null)
+            {
+                Client c = db.Clients.FirstOrDefault(l => l.ClientId == clientID);
 
-            List<Requirement> rl = au.Client.Requirements.ToList();
-            return View(rl);
+                if (c == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    List<Requirement> rl = c.Requirements.ToList();
+                    return View(rl);
+                }
+            }
+            else
+            {
+                string email = User.Identity.GetUserName();
+                ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+
+                List<Requirement> rl = au.Client.Requirements.ToList();
+                return View(rl);
+            }
         }
 
         protected override void Dispose(bool disposing)

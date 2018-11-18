@@ -1,0 +1,153 @@
+﻿@model MSWD.Models.Requirement
+
+@{
+    ViewBag.Title = "Requirements";
+}
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-12 header-page">
+                <a href="@Url.Action("Requirements","Clients",null)">@ViewBag.Title</a>&emsp;>&emsp;<font class="red-highlight">@Model.Name</font>
+            </div>
+        </div>
+    </div>
+
+    @if (User.IsInRole("Social Worker") || User.IsInRole("OIC"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert mswd-alert alert-sm">
+                    @if (!Model.IsDone)
+                    {
+                    <text>Once verified that the attached files are sufficient, click </text>
+                    <a class="btn btn-success btn-sm mswd-marginLeft10" data-toggle="tooltip" title="Mark as Approved" href="@Url.Action("ApproveRequirement","Requirements", new { @id=Model.RequirementId })">Approve <span class="glyphicon glyphicon-check"></span></a>
+                    }
+                    else
+                    {
+                    <text>To undo approval, click </text>
+                    <a class="btn btn-danger btn-sm mswd-marginLeft10" data-toggle="tooltip" title="Revert Approval" href="@Url.Action("RevertRequirement","Requirements", new { @id=Model.RequirementId })">Revert <span class="glyphicon glyphicon-unchecked"></span></a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mswd-window-subtle mswd-marginTop0 mswd-marginBot20 mswd-padding20">
+                @using (Html.BeginForm("UploadAttachment", "Requirements", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    <div class="input-group mswd-input-group">
+                        <input name="RequirementId" type="hidden" value="@Model.RequirementId"/>
+                        <input name="Attachment" type="file" class="form-control" placeholder="File" required>
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit">
+                                Upload
+                            </button>
+                        </span>
+                    </div>
+                }
+            </div>
+
+            <div class="mswd-window-subtle mswd-marginTop0 mswd-padding10">
+                <div class="table-responsive">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Date Created
+                                    </th>
+                                    <th>
+                                        Options
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.Attachments)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td>
+                                            @item.DateCreated.ToString("MM/dd hh:ss tt")
+                                        </td>
+                                        <td class="content-align-right">
+                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Download" href="@item.Location" download><span class="glyphicon glyphicon-download"></span></a>
+                                            <a class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete" href="@Url.Action("DeleteAttachment", "Requirements", new { @id = item.RequirementAttachmentId })"><span class="glyphicon glyphicon-remove"></span></a>
+                                        </td>
+                                    </tr>
+                                    }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mswd-window-subtle mswd-marginTop0 mswd-marginBot20 mswd-padding20">
+                @using (Html.BeginForm("Details", "Requirements", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="input-group mswd-input-group">
+                        @Html.HiddenFor(c=>c.RequirementId)
+
+                        <input name="Comments[0].Content" type="text" class="form-control" placeholder="Comment" required>
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit">
+                                Add Comment
+                            </button>
+                        </span>
+                    </div>
+                }
+            </div>
+
+            <div class="mswd-window-subtle mswd-marginTop0 mswd-padding10">
+                <div class="table-responsive">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Comment
+                                    </th>
+                                    <th>
+                                        Date Created
+                                    </th>
+                                    <th>
+                                        Options
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.Comments)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Content
+                                        </td>
+                                        <td>
+                                            @item.DateTimeCreated.ToString("MM/dd hh:ss tt")
+                                        </td>
+                                        <td class="content-align-right">
+                                            <a class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete Comment" href="@Url.Action("DeleteComment", new { @id=item.RequirementCommentId })"><span class="glyphicon glyphicon-question-remove"></span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

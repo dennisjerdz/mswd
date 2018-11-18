@@ -23,7 +23,7 @@
                     @if (User.IsInRole("Client"))
                     {
                         <li><a href="@Url.Action("Apply","Clients")">Apply</a></li>
-                        <li><a href="@Url.Action("Requirements","Clients")">Application Requirements</a></li>
+                        <li><a href="@Url.Action("Requirements","Clients")">Requirements</a></li>
                     }
 
                     @if (User.IsInRole("Social Worker") || User.IsInRole("OIC"))

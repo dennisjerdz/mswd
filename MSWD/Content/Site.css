@@ -74,6 +74,21 @@ body >*{
     transition:0.3s;
 }
 
+.btn-primary{
+    color:#0078eb;
+    background-color:transparent;
+    transition:0.3s;
+    border:1px solid #153dff !important;
+}
+
+.btn .glyphicon{
+    font-size:1.4em;
+}
+
+.tooltip{
+    font-size:1em;
+}
+
 .dropdown-menu{
     padding:0px;
     margin-top:10px;
@@ -260,4 +275,42 @@ body >*{
 
 .mswd-footer{
     margin-top:20px;
+}
+
+.mswd-orange-txt{
+    color:#ff6825;
+}
+
+mswd-green-txt{
+    color:#02ad00;
+}
+
+.mswd-padding10{
+    padding:10px !important;
+}
+
+.mswd-padding20{
+    padding:20px !important;
+}
+
+.mswd-marginLeft10{
+    margin-left:10px;
+}
+
+.mswd-marginBot20{
+    margin-bottom:30px !important;
+}
+
+.mswd-alert{
+    background-color:rgba(162,162,162,0.1);
+    padding:8px 17px 8px 17px;
+}
+
+.mswd-input-group .input-group-btn .btn{
+    border-radius:4px !important;
+    margin-left:10px;
+}
+
+.alert .btn span.glyphicon{
+    font-size:1em;
 }
