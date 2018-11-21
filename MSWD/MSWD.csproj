@@ -232,6 +232,22 @@
     <Compile Include="Migrations\201811171223360_interviewDate.Designer.cs">
       <DependentUpon>201811171223360_interviewDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811201702043_PwdNewInfo.cs" />
+    <Compile Include="Migrations\201811201702043_PwdNewInfo.Designer.cs">
+      <DependentUpon>201811201702043_PwdNewInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811212248064_PWDEA.cs" />
+    <Compile Include="Migrations\201811212248064_PWDEA.Designer.cs">
+      <DependentUpon>201811212248064_PWDEA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811212250081_PWDEA2.cs" />
+    <Compile Include="Migrations\201811212250081_PWDEA2.Designer.cs">
+      <DependentUpon>201811212250081_PWDEA2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811212253298_PWDEA3.cs" />
+    <Compile Include="Migrations\201811212253298_PWDEA3.Designer.cs">
+      <DependentUpon>201811212253298_PWDEA3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClientModels.cs" />
@@ -379,6 +395,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811171223360_interviewDate.resx">
       <DependentUpon>201811171223360_interviewDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811201702043_PwdNewInfo.resx">
+      <DependentUpon>201811201702043_PwdNewInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811212248064_PWDEA.resx">
+      <DependentUpon>201811212248064_PWDEA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811212250081_PWDEA2.resx">
+      <DependentUpon>201811212250081_PWDEA2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811212253298_PWDEA3.resx">
+      <DependentUpon>201811212253298_PWDEA3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

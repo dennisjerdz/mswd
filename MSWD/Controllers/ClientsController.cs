@@ -357,12 +357,12 @@ namespace MSWD.Controllers
             string username = User.Identity.GetUserName();
             ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
 
-            ClientEditModel ce = new ClientEditModel();
-            ce.GivenName = au.GivenName;
-            ce.MiddleName = au.MiddleName;
-            ce.SurName = au.LastName;
+            ClientPWDEditModel cpwde = new ClientPWDEditModel();
+            cpwde.GivenName = au.GivenName;
+            cpwde.MiddleName = au.MiddleName;
+            cpwde.SurName = au.LastName;
 
-            return View(ce);
+            return View(cpwde);
         }
 
         [Route("SoloParent/Apply")]

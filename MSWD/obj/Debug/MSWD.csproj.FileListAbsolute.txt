@@ -87,3 +87,7 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\bin\GlobeConnect.
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.clientLogin.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.RequirementComments.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.interviewDate.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.PwdNewInfo.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.PWDEA.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.PWDEA2.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Debug\MSWD.Migrations.PWDEA3.resources

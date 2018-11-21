@@ -268,6 +268,46 @@ namespace MSWD.Models
         [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
 
+        public bool? PsychosocialMentalDisability { get; set; }
+        public bool? VisualDisability { get; set; }
+        public bool? CommunicationDisability { get; set; }
+        public bool? LearningDisability { get; set; }
+        public bool? OrthopedicDisability { get; set; }
+        public bool? IntellectualDisability { get; set; }
+
+        public bool? Inborn { get; set; }
+        public bool? Acquired { get; set; }
+        public int? AgeAcquired { get; set; }
+
+        public string School { get; set; }
+        public string EducationalAttainment { get; set; }
+
+        /*public bool? EAElementary { get; set; }
+        public bool? EAElementaryUndergraduate { get; set; }
+        public bool? EAHighSchool { get; set; }
+        public bool? EAHighSchoolUndergraduate { get; set; }
+        public bool? EACollege { get; set; }
+        public bool? EACollegeUndergraduate { get; set; }
+        public bool? EAGraduate { get; set; }
+        public bool? EASPED { get; set; }
+        public bool? EAPostGraduate { get; set; }
+        public bool? EAVocational { get; set; }
+        public bool? EANone { get; set; }*/
+
+        public string TypeOfSkill { get; set; }
+        /*
+            Officials Of Government, Executive, Managers, and Supervisors
+            Professionals
+            Technicians and Asociate Professionals
+            Clerks
+            Service Workers and Market Sales Workers
+            Trades and Related Workers
+            Plant, Machine Operators, and Assemblers
+            Laborers
+            Unskilled Workers
+            Special Occupation 
+        */
+
         public DateTime? InterviewDate { get; set; }
 
         public virtual Client Client { get; set; }
@@ -432,6 +472,117 @@ namespace MSWD.Models
         public DateTime? SpouseBirthDate { get; set; }
         [Display(Name = "Spouse Blu Card No")]
         public string SpouseBluCardNo { get; set; }
+
+        // User who entered
+        public string CreatedByUserId { get; set; }
+
+        public List<ClientBeneficiary> ClientBeneficiaries { get; set; }
+    }
+
+    public class ClientPWDEditModel
+    {
+        public ClientPWDEditModel()
+        {
+
+        }
+
+        [Required]
+        [Display(Name = "Given Name")]
+        public string GivenName { get; set; }
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; }
+        [Required]
+        [Display(Name = "Sur Name")]
+        public string SurName { get; set; }
+        [Required]
+        public string Gender { get; set; } // Male, Female
+        [Required]
+        [Display(Name = "Civil Status")]
+        public string CivilStatus { get; set; } // Single, Married, Widowed, Divorced
+
+        // Work
+        public string Occupation { get; set; }
+        public string Citizenship { get; set; }
+
+        // Address
+        [ForeignKey("City")]
+        public int CityId { get; set; }
+        public virtual City City { get; set; }
+
+        [Required]
+        [Display(Name = "City Address")]
+        public string CityAddress { get; set; }
+        [Display(Name = "Provincial Address")]
+        public string ProvincialAddress { get; set; }
+        [Display(Name = "Contact Number")]
+        public string ContactNumber { get; set; }
+
+        // Residency
+        [Display(Name = "Type Of Residency")]
+        public string TypeOfResidency { get; set; } // House Owner, Sharer, Lessee/Tenant, Boarder
+        [Display(Name = "Start Of Residency")]
+        public DateTime? StartOfResidency { get; set; }
+
+        // Age
+        [Required]
+        [Display(Name = "Birth Date")]
+        public DateTime BirthDate { get; set; }
+        [Required]
+        [Display(Name = "Birth Place")]
+        public string BirthPlace { get; set; }
+        public string Religion { get; set; }
+
+        // Marriage
+        [Display(Name = "Date Of Marriage")]
+        public DateTime? DateOfMarriage { get; set; }
+        [Display(Name = "Place Of Marriage")]
+        public string PlaceOfMarriage { get; set; }
+        [Display(Name = "Spouse Name")]
+        public string SpouseName { get; set; }
+        [Display(Name = "Spouse Birth Date")]
+        public DateTime? SpouseBirthDate { get; set; }
+        [Display(Name = "Spouse Blu Card No")]
+        public string SpouseBluCardNo { get; set; }
+
+        public bool? PsychosocialMentalDisability { get; set; }
+        public bool? VisualDisability { get; set; }
+        public bool? CommunicationDisability { get; set; }
+        public bool? LearningDisability { get; set; }
+        public bool? OrthopedicDisability { get; set; }
+        public bool? IntellectualDisability { get; set; }
+
+        public bool? Inborn { get; set; }
+        public bool? Acquired { get; set; }
+        public int? AgeAcquired { get; set; }
+
+        public string School { get; set; }
+        public string EducationalAttainment { get; set; }
+
+        /*public bool? EAElementary { get; set; }
+        public bool? EAElementaryUndergraduate { get; set; }
+        public bool? EAHighSchool { get; set; }
+        public bool? EAHighSchoolUndergraduate { get; set; }
+        public bool? EACollege { get; set; }
+        public bool? EACollegeUndergraduate { get; set; }
+        public bool? EAGraduate { get; set; }
+        public bool? EASPED { get; set; }
+        public bool? EAPostGraduate { get; set; }
+        public bool? EAVocational { get; set; }
+        public bool? EANone { get; set; }*/
+
+        public string TypeOfSkill { get; set; }
+        /*
+            Officials Of Government, Executive, Managers, and Supervisors
+            Professionals
+            Technicians and Asociate Professionals
+            Clerks
+            Service Workers and Market Sales Workers
+            Trades and Related Workers
+            Plant, Machine Operators, and Assemblers
+            Laborers
+            Unskilled Workers
+            Special Occupation 
+        */
 
         // User who entered
         public string CreatedByUserId { get; set; }
