@@ -1,0 +1,168 @@
+﻿@model MSWD.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Client";
+}
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-12 header-page">
+                <a href="#">@ViewBag.Title</a>&emsp;>&emsp;<font class="red-highlight">Apply (Click one of the options to start)</font>
+            </div>
+
+            @*
+            <div class="col-md-2">
+                @if (Model.SeniorCitizen != null)
+                {
+                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Senior Citizen Info" href="@Url.Action("View","SeniorCitizens", new { @id = Model.ClientId })">Senior Citizen <span class="glyphicon glyphicon-share"></span></a>
+                }
+
+                @if (Model.SoloParent != null)
+                {
+                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Solo Parent Info" href="@Url.Action("View","SoloParents", new { @id = Model.ClientId })">Solo Parent <span class="glyphicon glyphicon-share"></span></a>
+                }
+
+                @if (Model.Pwd != null)
+                {
+                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View PWD Info" href="@Url.Action("View","PWDs", new { @id = Model.ClientId })">PWD <span class="glyphicon glyphicon-share"></span></a>
+                }
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNoteModal">
+                    Add Note <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNumberModal">
+                    Add Number <span class="glyphicon glyphicon-phone"></span>
+                </button>
+            </div>
+            *@
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mswd-btn-group btn-group-vertical mswd-width100">
+                <a href="#" data-target="#soloParentCollapse" class="btn btn-collapse-toggle btn-lg btn-block btn-info">Solo Parent</a>
+                <a href="#" data-target="#seniorCitizenCollapse" class="btn btn-collapse-toggle btn-lg btn-block btn-info">Senior Citizen</a>
+                <a href="#" data-target="#pwdCollapse" class="btn btn-collapse-toggle btn-lg btn-block btn-info">Person w/ Disability</a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="mswd-window-subtle mswd-marginTop0">
+                <div class="mswd-accordion once collapse" id="soloParentCollapse">
+                    <h3>Solo Parent Requirements</h3>
+                    <ol class="mswd-list">
+                        <li>Baranggay Certificate</li>
+                        <li>Proof of financial status</li>
+                        <li>Supporting documents/certificates (Nullity of Marriage, Death Certificate)</li>
+                        <li>Birth certificate/s of your child/children</li>
+                        <li>Filled up Solo Parent ID application form</li>
+                    </ol>
+                    @if (Model.Client == null)
+                    {
+                        <a href="@Url.Action("ApplySP","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    }
+                    else
+                    {
+                        if (Model.Client.SoloParent == null)
+                        {
+                            <a href="@Url.Action("ApplySP","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                        }
+                        else
+                        {
+                            <div class="alert mswd-alert mswd-marginTop25">
+                                You've already applied for Solo Parent, <a href="@Url.Action("Requirements")">click this link</a> to upload requirements.
+                            </div>
+                        }
+
+                    }
+                </div>
+                <div class="mswd-accordion once collapse" id="seniorCitizenCollapse">
+                    <h3>Senior Citizen Requirements</h3>
+                    <ol class="mswd-list">
+                        <li>Recent Photograph (1x1 or 2x2)</li>
+                        <li>Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance</li>
+                    </ol>
+
+                    @if (Model.Client == null)
+                    {
+                        <a href="@Url.Action("ApplySC","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    }
+                    else
+                    {
+                        if (Model.Client.SeniorCitizen == null)
+                        {
+                            <a href="@Url.Action("ApplySC","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                        }
+                        else
+                        {
+                            <div class="alert mswd-alert mswd-marginTop25">
+                                You've already applied for Senior Citizen, <a href="@Url.Action("Requirements")">click this link</a> to upload requirements.
+                            </div>
+                        }
+
+                    }
+                </div>
+                <div class="mswd-accordion once collapse" id="pwdCollapse">
+                    <h3>Person with Disability Requirements</h3>
+                    <ol class="mswd-list">
+                        <li>Baranggay Certificate</li>
+                        <li>Medical Certificate or abstract from Physician</li>
+                        <li>Recent Photograph (1x1 or 2x2)</li>
+                        <li>Authorization Letter (if you're applying for somebody else)</li>
+                    </ol>
+                    
+                    @if (Model.Client == null)
+                    {
+                        <a href="@Url.Action("ApplyPwd","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                    }
+                    else
+                    {
+                        if (Model.Client.Pwd == null)
+                        {
+                            <a href="@Url.Action("ApplyPwd","Clients",null)" class="btn btn-block btn-info mswd-marginTop25">Fill up the Application Form here to Proceed</a>
+                        }
+                        else
+                        {
+                            <div class="alert mswd-alert mswd-marginTop25">
+                                You've already applied for PWD, <a href="@Url.Action("Requirements")">click this link</a> to upload requirements.
+                            </div>
+                        }
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(".btn-collapse-toggle").click(function () {
+            var self = this;
+
+            $(".mswd-accordion").each(function () {
+                var id = "#" + $(this).attr("id");
+
+                if (id == $(self).data("target")) {
+                    $(this).removeClass("once");
+                    $(this).collapse("show");
+                } else {
+                    if($(this).hasClass("once")){
+
+                    } else {
+                        $(this).collapse("hide");
+                        $(this).removeClass("once");
+                    }
+                    
+                }
+            });
+        });
+    </script>    
+}

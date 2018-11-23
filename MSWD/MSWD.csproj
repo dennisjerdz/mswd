@@ -205,9 +205,11 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PwdsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\SeniorCitizensController.cs" />
     <Compile Include="Controllers\SMSController.cs" />
+    <Compile Include="Controllers\SoloParentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +249,26 @@
     <Compile Include="Migrations\201811212253298_PWDEA3.cs" />
     <Compile Include="Migrations\201811212253298_PWDEA3.Designer.cs">
       <DependentUpon>201811212253298_PWDEA3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811221919204_pwdInfo2.cs" />
+    <Compile Include="Migrations\201811221919204_pwdInfo2.Designer.cs">
+      <DependentUpon>201811221919204_pwdInfo2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811221922239_pwdInfo3.cs" />
+    <Compile Include="Migrations\201811221922239_pwdInfo3.Designer.cs">
+      <DependentUpon>201811221922239_pwdInfo3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230118312_applicationDateto3.cs" />
+    <Compile Include="Migrations\201811230118312_applicationDateto3.Designer.cs">
+      <DependentUpon>201811230118312_applicationDateto3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230303415_releaseDate.cs" />
+    <Compile Include="Migrations\201811230303415_releaseDate.Designer.cs">
+      <DependentUpon>201811230303415_releaseDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230449359_soloParentRemoveDateCreated.cs" />
+    <Compile Include="Migrations\201811230449359_soloParentRemoveDateCreated.Designer.cs">
+      <DependentUpon>201811230449359_soloParentRemoveDateCreated.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -367,6 +389,16 @@
     <Content Include="Views\Requirements\Details.cshtml" />
     <Content Include="Views\Requirements\Edit.cshtml" />
     <Content Include="Views\Requirements\Index.cshtml" />
+    <Content Include="Views\SoloParents\Create.cshtml" />
+    <Content Include="Views\SoloParents\Delete.cshtml" />
+    <Content Include="Views\SoloParents\Details.cshtml" />
+    <Content Include="Views\SoloParents\Edit.cshtml" />
+    <Content Include="Views\SoloParents\Index.cshtml" />
+    <Content Include="Views\Pwds\Create.cshtml" />
+    <Content Include="Views\Pwds\Delete.cshtml" />
+    <Content Include="Views\Pwds\Details.cshtml" />
+    <Content Include="Views\Pwds\Edit.cshtml" />
+    <Content Include="Views\Pwds\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -407,6 +439,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811212253298_PWDEA3.resx">
       <DependentUpon>201811212253298_PWDEA3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221919204_pwdInfo2.resx">
+      <DependentUpon>201811221919204_pwdInfo2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221922239_pwdInfo3.resx">
+      <DependentUpon>201811221922239_pwdInfo3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230118312_applicationDateto3.resx">
+      <DependentUpon>201811230118312_applicationDateto3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230303415_releaseDate.resx">
+      <DependentUpon>201811230303415_releaseDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230449359_soloParentRemoveDateCreated.resx">
+      <DependentUpon>201811230449359_soloParentRemoveDateCreated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

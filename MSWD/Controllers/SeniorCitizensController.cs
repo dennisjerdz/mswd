@@ -138,6 +138,114 @@ namespace MSWD.Controllers
             return RedirectToAction("Index");
         }
 
+        /* Application Status Update */
+
+        public ActionResult UpdateSCHomeVisit(int? id)
+        {
+            SeniorCitizen c = db.SeniorCitizens.FirstOrDefault(s => s.SeniorCitizenId == id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                c.Status = "For Home Visit";
+                db.SaveChanges();
+                return RedirectToAction("Index", new { });
+            }
+        }
+
+        public ActionResult UpdateSCHomeVisitDate()
+        {
+            int id = Convert.ToInt16(Request.Form["SeniorCitizenId"]);
+            string unparsedDate = Request.Form["Date"];
+
+            DateTime date = DateTime.Parse(unparsedDate);
+
+            SeniorCitizen c = db.SeniorCitizens.FirstOrDefault(s => s.SeniorCitizenId == id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                c.InterviewDate = date;
+                db.SaveChanges();
+                return RedirectToAction("Index", new { });
+            }
+        }
+
+        public ActionResult UpdateSCApproved(int? id)
+        {
+            SeniorCitizen c = db.SeniorCitizens.FirstOrDefault(s => s.SeniorCitizenId == id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                c.Status = "Approved";
+                db.SaveChanges();
+                return RedirectToAction("Index", new { });
+            }
+        }
+
+        public ActionResult UpdateSCReleaseDate()
+        {
+            int id = Convert.ToInt16(Request.Form["SeniorCitizenId"]);
+            string unparsedDate = Request.Form["Date"];
+
+            DateTime date = DateTime.Parse(unparsedDate);
+
+            SeniorCitizen c = db.SeniorCitizens.FirstOrDefault(s => s.SeniorCitizenId == id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                c.ReleaseDate = date;
+                db.SaveChanges();
+                return RedirectToAction("Index", new { });
+            }
+        }
+
+        public ActionResult UpdateSCRejected(int? id)
+        {
+            SeniorCitizen c = db.SeniorCitizens.FirstOrDefault(s => s.SeniorCitizenId == id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                c.Status = "Rejected";
+                db.SaveChanges();
+                return RedirectToAction("Index", new { });
+            }
+        }
+
+        public ActionResult UpdateSCPending(int? id)
+        {
+            SeniorCitizen c = db.SeniorCitizens.FirstOrDefault(s => s.SeniorCitizenId == id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                c.Status = "Pending";
+                db.SaveChanges();
+                return RedirectToAction("Index", new { });
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -74,6 +74,21 @@ body >*{
     transition:0.3s;
 }
 
+.btn-primary{
+    color:#0078eb;
+    background-color:transparent;
+    transition:0.3s;
+    border:1px solid #153dff !important;
+}
+
+.btn .glyphicon{
+    font-size:1.4em;
+}
+
+.tooltip{
+    font-size:1em;
+}
+
 .dropdown-menu{
     padding:0px;
     margin-top:10px;
@@ -168,4 +183,134 @@ body >*{
 
 .dataTables_info{
     font-size:0.85em !important;
+}
+
+.mswd-window {
+    margin-top:40px;
+    padding:30px;
+    border-radius:4px;
+    box-shadow: rgba(0,0,0,0.2) 0px 2px 10px 1px;
+    background-color:white;
+}
+
+.mswd-window-subtle{
+    margin-top:40px;
+    padding:30px;
+    border-radius:4px;
+    box-shadow: 0px 7px 25px -8px rgba(90,90,90,0.2);
+}
+
+.mswd-btn-group{
+    box-shadow: 0px 7px 25px -8px rgba(90,90,90,0.2);
+    border-radius:4px;
+}
+
+.mswd-btn-group .btn-default, .mswd-btn-group .btn-info{
+    border:none;
+    line-height:40px;
+}
+
+.mswd-login-gradient {
+    background: rgb(185,215,143);
+    background: radial-gradient(circle, rgba(185,215,143,1) 0%, rgba(73,224,255,1) 64%);
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.mswd-height-100{
+    height:100% !important;
+}
+
+.mswd-marginTop25{
+    margin-top:25px;
+}
+
+.mswd-marginTop0{
+    margin-top:0px !important;
+}
+
+.mswd-align-right{
+    text-align:right;
+    margin-top:25px;
+    font-weight:400;
+}
+
+.mswd-url-btn{
+    font-size:1.1em;
+    padding:8px 15px 8px 15px;
+    background-color:white;
+    border-radius:4px;
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.1);
+    transition:0.2s;
+    color:#264b98;
+}
+
+.mswd-url-btn:hover{
+    text-decoration:none;
+    background-color:#39b3d7;
+    color:white;
+    box-shadow:none;
+}
+
+.mswd-thick{
+    font-weight:800;
+}
+
+.mswd-width100{
+    width:100%;
+}
+
+.mswd-list li{
+    font-size:1.1em;
+    padding-left:20px;
+    line-height:30px;
+}
+
+.mswd-list{
+    padding-inline-start: 0px;
+    margin-inline-start: 15px;
+}
+
+.mswd-footer{
+    margin-top:20px;
+}
+
+.mswd-orange-txt{
+    color:#ff6825;
+}
+
+.mswd-green-txt{
+    color:#00e02e;
+}
+
+.mswd-padding10{
+    padding:10px !important;
+}
+
+.mswd-padding20{
+    padding:20px !important;
+}
+
+.mswd-marginLeft10{
+    margin-left:10px;
+}
+
+.mswd-marginBot20{
+    margin-bottom:30px !important;
+}
+
+.mswd-alert{
+    background-color:rgba(162,162,162,0.1);
+    padding:8px 17px 8px 17px;
+}
+
+.mswd-input-group .input-group-btn .btn{
+    border-radius:4px !important;
+    margin-left:10px;
+}
+
+.alert .btn span.glyphicon{
+    font-size:1em;
 }

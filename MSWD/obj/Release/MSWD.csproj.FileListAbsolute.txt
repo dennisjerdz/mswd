@@ -83,3 +83,16 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.csproj.GenerateResource.Cache
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.dll
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.pdb
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.csprojResolveAssemblyReference.cache
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.clientLogin.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.RequirementComments.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.interviewDate.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.PwdNewInfo.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.PWDEA.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.PWDEA2.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.PWDEA3.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.pwdInfo2.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.pwdInfo3.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.applicationDateto3.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.releaseDate.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.soloParentRemoveDateCreated.resources

@@ -1,0 +1,160 @@
+﻿@model MSWD.Models.Pwd
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Pwd</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedBy.CreatedByUserId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedBy.CreatedByUserId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.VerifiedBy.CreatedByUserId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.VerifiedBy.CreatedByUserId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PsychosocialMentalDisability)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PsychosocialMentalDisability)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.VisualDisability)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.VisualDisability)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CommunicationDisability)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CommunicationDisability)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.LearningDisability)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.LearningDisability)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.OrthopedicDisability)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.OrthopedicDisability)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.IntellectualDisability)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.IntellectualDisability)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Inborn)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Inborn)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Acquired)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Acquired)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AgeAcquired)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AgeAcquired)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.InterviewDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.InterviewDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ApplicationDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ApplicationDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ApprovalDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ApprovalDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

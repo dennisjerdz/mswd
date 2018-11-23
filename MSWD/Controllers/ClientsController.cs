@@ -292,7 +292,7 @@ namespace MSWD.Controllers
             string username = User.Identity.GetUserName();
             ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
 
-            if (au.Client.SeniorCitizen == null)
+            if (au.Client != null)
             {
                 return RedirectToAction("Apply");
             }
@@ -323,11 +323,15 @@ namespace MSWD.Controllers
             SeniorCitizen newSC = new SeniorCitizen();
             newSC.Status = "Pending";
             newSC.Client = newClient;
+            newSC.ApplicationDate = newClient.DateCreated;
 
             db.SeniorCitizens.Add(newSC);
 
-            ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
-            ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+            if (ce.ClientBeneficiaries != null)
+            {
+                ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+                ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+            }
 
             string email = User.Identity.GetUserName();
             ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
@@ -365,6 +369,69 @@ namespace MSWD.Controllers
             return View(cpwde);
         }
 
+        [Route("Pwd/Apply")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApplyPwd(ClientPWDEditModel cpwde)
+        {
+            string username = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            if (au.Client != null)
+            {
+                // if existing client
+
+            }
+            else
+            {
+                // if new client
+                Client newClient = new Client(cpwde);
+
+                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = identity.Claims;
+
+                newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c => c.Type == "CityId").Value);
+                newClient.DateCreated = DateTime.UtcNow.AddHours(8);
+
+                db.Clients.Add(newClient);
+
+                Pwd newPWD = new Pwd();
+                newPWD.Status = "Pending";
+                newPWD.Client = newClient;
+                newPWD.ApplicationDate = newClient.DateCreated;
+
+                db.Pwds.Add(newPWD);
+
+                if (cpwde.ClientBeneficiaries != null)
+                {
+                    cpwde.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+                    cpwde.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+                }
+                
+                au.ClientId = newClient.ClientId;
+
+                List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "PWD Baranggay Certificate", Description = "Baranggay Certificate" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "PWD Medical Certificate", Description = "Medical Certificate or abstract from Physician" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "PWD Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "PWD Authorization Letter", Description = "Disregard if applying by yourself" },
+                };
+
+                db.Requirements.AddRange(rl);
+
+                if (db.SaveChanges() > 1)
+                {
+                    return RedirectToAction("Requirements", "Clients", null);
+                }
+                else
+                {
+                    return View(cpwde);
+                }
+            }
+
+            return View(cpwde);
+        }
+
         [Route("SoloParent/Apply")]
         public ActionResult ApplySP()
         {
@@ -379,11 +446,100 @@ namespace MSWD.Controllers
             return View(ce);
         }
 
-        public ActionResult Requirements(int? clientID)
-        {
-            if (clientID != null)
+        /*
+            Client newClient = new Client(ce);
+
+            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+
+            newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c=>c.Type=="CityId").Value);
+            newClient.DateCreated = DateTime.UtcNow.AddHours(8);
+
+            db.Clients.Add(newClient);
+
+            SeniorCitizen newSC = new SeniorCitizen();
+            newSC.Status = "Pending";
+            newSC.Client = newClient;
+            newSC.ApplicationDate = newClient.DateCreated;
+
+            db.SeniorCitizens.Add(newSC);
+
+            if (ce.ClientBeneficiaries != null)
             {
-                Client c = db.Clients.FirstOrDefault(l => l.ClientId == clientID);
+                ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+                ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+            } 
+
+            string email = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+
+            au.ClientId = newClient.ClientId;
+
+            List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
+            };
+
+            db.Requirements.AddRange(rl);
+        */
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("SoloParent/Apply")]
+        public ActionResult ApplySP(ClientEditModel ce)
+        {
+            Client newClient = new Client(ce);
+
+            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+
+            newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c => c.Type == "CityId").Value);
+            newClient.DateCreated = DateTime.UtcNow.AddHours(8);
+
+            db.Clients.Add(newClient);
+
+            SoloParent newSC = new SoloParent();
+            newSC.Status = "Pending";
+            newSC.Client = newClient;
+            newSC.ApplicationDate = newClient.DateCreated;
+
+            db.SoloParents.Add(newSC);
+
+            if (ce.ClientBeneficiaries != null)
+            {
+                ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+                ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+            }
+
+            string email = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+
+            au.ClientId = newClient.ClientId;
+
+            List<Requirement> rl = new List<Requirement>{
+                new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Baranggay Certificate", Description = "Baranggay Certificate" },
+                new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Proof of Financial Status", Description = "Payslip, Bank Transactions" },
+                new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Supporting Document", Description = "Nullity of Marriage, Death Certificate" },
+                new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Birth Certificate (Children)", Description = "Birth Certificate of your child/children" },
+           };
+
+            db.Requirements.AddRange(rl);
+
+            if (db.SaveChanges() > 1)
+            {
+                return RedirectToAction("Requirements", "Clients", null);
+            }
+            else
+            {
+                return View(ce);
+            }
+        }
+
+        public ActionResult Requirements(int? id)
+        {
+            if (id != null)
+            {
+                Client c = db.Clients.FirstOrDefault(l => l.ClientId == id);
 
                 if (c == null)
                 {
@@ -400,8 +556,18 @@ namespace MSWD.Controllers
                 string email = User.Identity.GetUserName();
                 ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
 
-                List<Requirement> rl = au.Client.Requirements.ToList();
-                return View(rl);
+                ViewBag.clientName = au.getFullName();
+
+                if (au.Client == null)
+                {
+                    List<Requirement> rl = new List<Requirement>();
+                    return View(rl);
+                }
+                else
+                {
+                    List<Requirement> rl = au.Client.Requirements.ToList();
+                    return View(rl);
+                }
             }
         }
 

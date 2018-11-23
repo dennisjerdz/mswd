@@ -49,6 +49,50 @@ namespace MSWD.Models
             SpouseBluCardNo = ce.SpouseBluCardNo;
         }
 
+        public Client(ClientPWDEditModel cpwde)
+        {
+            GivenName = cpwde.GivenName;
+            MiddleName = cpwde.MiddleName;
+            SurName = cpwde.SurName;
+            Gender = cpwde.Gender;
+            CivilStatus = cpwde.CivilStatus;
+            Occupation = cpwde.Occupation;
+            Citizenship = cpwde.Citizenship;
+            CityAddress = cpwde.CityAddress;
+
+            ProvincialAddress = cpwde.ProvincialAddress;
+            ContactNumber = cpwde.ContactNumber;
+            TypeOfResidency = cpwde.TypeOfResidency;
+            StartOfResidency = cpwde.StartOfResidency;
+            BirthDate = cpwde.BirthDate;
+            BirthPlace = cpwde.BirthPlace;
+            Religion = cpwde.Religion;
+            DateOfMarriage = cpwde.DateOfMarriage;
+            PlaceOfMarriage = cpwde.PlaceOfMarriage;
+            SpouseName = cpwde.SpouseName;
+            SpouseBirthDate = cpwde.SpouseBirthDate;
+            SpouseBluCardNo = cpwde.SpouseBluCardNo;
+
+            EducationalAttainment = cpwde.EducationalAttainment;
+            School = cpwde.School;
+
+            EmploymentStatus = cpwde.EmploymentStatus;
+            Position = cpwde.Position;
+            Company = cpwde.Company;
+
+            NatureOfEmployer = cpwde.NatureOfEmployer;
+            TypeOfEmployment = cpwde.TypeOfEmployment;
+
+            TypeOfSkill = cpwde.TypeOfSkill;
+
+            SSSNo = cpwde.SSSNo;
+            GSISNo = cpwde.GSISNo;
+            PhilhealthNo = cpwde.PhilhealthNo;
+            PhilHealthMembershipType = cpwde.PhilHealthMembershipType;
+            YellowCardNo = cpwde.YellowCardNo;
+            YellowCardMembershipType = cpwde.YellowCardMembershipType;
+        }
+
         [Key]
         public int ClientId { get; set; }
 
@@ -133,6 +177,51 @@ namespace MSWD.Models
         public DateTime? SpouseBirthDate { get; set; }
         [Display(Name = "Spouse Blu Card No")]
         public string SpouseBluCardNo { get; set; }
+
+        public string School { get; set; }
+        public string EducationalAttainment { get; set; }
+
+        /*
+            public bool? EAElementary { get; set; }
+            public bool? EAElementaryUndergraduate { get; set; }
+            public bool? EAHighSchool { get; set; }
+            public bool? EAHighSchoolUndergraduate { get; set; }
+            public bool? EACollege { get; set; }
+            public bool? EACollegeUndergraduate { get; set; }
+            public bool? EAGraduate { get; set; }
+            public bool? EASPED { get; set; }
+            public bool? EAPostGraduate { get; set; }
+            public bool? EAVocational { get; set; }
+            public bool? EANone { get; set; }
+        */
+
+        public string TypeOfSkill { get; set; }
+
+        /*
+            Officials Of Government, Executive, Managers, and Supervisors
+            Professionals
+            Technicians and Asociate Professionals
+            Clerks
+            Service Workers and Market Sales Workers
+            Trades and Related Workers
+            Plant, Machine Operators, and Assemblers
+            Laborers
+            Unskilled Workers
+            Special Occupation 
+        */
+
+        public string EmploymentStatus { get; set; }
+        public string Position { get; set; }
+        public string Company { get; set; }
+        public string NatureOfEmployer { get; set; }
+        public string TypeOfEmployment { get; set; }
+
+        public string SSSNo { get; set; }
+        public string GSISNo { get; set; }
+        public string PhilhealthNo { get; set; }
+        public string PhilHealthMembershipType { get; set; }
+        public string YellowCardNo { get; set; }
+        public string YellowCardMembershipType { get; set; }
 
         //[ForeignKey("CreatedBy")]
         //public string CreatedBy { get; set; }
@@ -223,6 +312,10 @@ namespace MSWD.Models
 
         public DateTime? InterviewDate { get; set; }
 
+        public DateTime ApplicationDate { get; set; }
+        public DateTime? ApprovalDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
+
         public virtual Client Client { get; set; }
     }
 
@@ -243,10 +336,11 @@ namespace MSWD.Models
         [Display(Name = "Verified By")]
         public ApplicationUser VerifiedBy { get; set; }
 
-        [Display(Name = "Date Created")]
-        public DateTime DateCreated { get; set; }
-
         public DateTime? InterviewDate { get; set; }
+
+        public DateTime ApplicationDate { get; set; }
+        public DateTime? ApprovalDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public virtual Client Client { get; set; }
     }
@@ -279,36 +373,11 @@ namespace MSWD.Models
         public bool? Acquired { get; set; }
         public int? AgeAcquired { get; set; }
 
-        public string School { get; set; }
-        public string EducationalAttainment { get; set; }
-
-        /*public bool? EAElementary { get; set; }
-        public bool? EAElementaryUndergraduate { get; set; }
-        public bool? EAHighSchool { get; set; }
-        public bool? EAHighSchoolUndergraduate { get; set; }
-        public bool? EACollege { get; set; }
-        public bool? EACollegeUndergraduate { get; set; }
-        public bool? EAGraduate { get; set; }
-        public bool? EASPED { get; set; }
-        public bool? EAPostGraduate { get; set; }
-        public bool? EAVocational { get; set; }
-        public bool? EANone { get; set; }*/
-
-        public string TypeOfSkill { get; set; }
-        /*
-            Officials Of Government, Executive, Managers, and Supervisors
-            Professionals
-            Technicians and Asociate Professionals
-            Clerks
-            Service Workers and Market Sales Workers
-            Trades and Related Workers
-            Plant, Machine Operators, and Assemblers
-            Laborers
-            Unskilled Workers
-            Special Occupation 
-        */
-
         public DateTime? InterviewDate { get; set; }
+
+        public DateTime ApplicationDate { get; set; }
+        public DateTime? ApprovalDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public virtual Client Client { get; set; }
     }
@@ -558,19 +627,22 @@ namespace MSWD.Models
         public string School { get; set; }
         public string EducationalAttainment { get; set; }
 
-        /*public bool? EAElementary { get; set; }
-        public bool? EAElementaryUndergraduate { get; set; }
-        public bool? EAHighSchool { get; set; }
-        public bool? EAHighSchoolUndergraduate { get; set; }
-        public bool? EACollege { get; set; }
-        public bool? EACollegeUndergraduate { get; set; }
-        public bool? EAGraduate { get; set; }
-        public bool? EASPED { get; set; }
-        public bool? EAPostGraduate { get; set; }
-        public bool? EAVocational { get; set; }
-        public bool? EANone { get; set; }*/
+        /*
+            public bool? EAElementary { get; set; }
+            public bool? EAElementaryUndergraduate { get; set; }
+            public bool? EAHighSchool { get; set; }
+            public bool? EAHighSchoolUndergraduate { get; set; }
+            public bool? EACollege { get; set; }
+            public bool? EACollegeUndergraduate { get; set; }
+            public bool? EAGraduate { get; set; }
+            public bool? EASPED { get; set; }
+            public bool? EAPostGraduate { get; set; }
+            public bool? EAVocational { get; set; }
+            public bool? EANone { get; set; }
+        */
 
         public string TypeOfSkill { get; set; }
+
         /*
             Officials Of Government, Executive, Managers, and Supervisors
             Professionals
@@ -583,6 +655,20 @@ namespace MSWD.Models
             Unskilled Workers
             Special Occupation 
         */
+
+        public string EmploymentStatus { get; set; }
+        public string Position { get; set; }
+        public string Company { get; set; }
+
+        public string NatureOfEmployer { get; set; }
+        public string TypeOfEmployment { get; set; }
+
+        public string SSSNo { get; set; }
+        public string GSISNo { get; set; }
+        public string PhilhealthNo { get; set; }
+        public string PhilHealthMembershipType { get; set; }
+        public string YellowCardNo { get; set; }
+        public string YellowCardMembershipType { get; set; }
 
         // User who entered
         public string CreatedByUserId { get; set; }

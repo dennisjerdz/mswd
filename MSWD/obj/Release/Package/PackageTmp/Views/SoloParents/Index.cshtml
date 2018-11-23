@@ -1,0 +1,220 @@
+﻿@model IEnumerable<MSWD.Models.SoloParent>
+
+@{
+    ViewBag.Title = "Solo Parent";
+}
+
+<div id="homeVisitModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("UpdateSPHomeVisitDate", "SoloParents", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Home Visit Date</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="homeVisitSoloParentId" name="SoloParentId" value="" />
+                    <label class="control-label">Select Date</label>
+                    <input class="form-control" id="homeVisitCalendar" name="Date" type="datetime-local" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="releaseDateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("UpdateSPReleaseDate", "SoloParents", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Release Date</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="releaseDateSoloParentId" name="SoloParentId" value="" />
+                    <label class="control-label">Select Date</label>
+                    <input class="form-control" id="releaseDateCalendar" name="Date" type="datetime-local" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-8">
+                @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+            </div>
+
+            <div class="col-md-4">
+                <input class="form-control all-search" placeholder="Search" />
+            </div>
+
+            @*
+                <div class="col-md-2">
+                    <div class="pull-right">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Add Client <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="right:0 !important; left:unset !important;" aria-labelledby="dropdownMenu1">
+                                <li><a href="@Url.Action("Create","SeniorCitizens", new { })">Senior Citizen</a></li>
+                                <li><a href="#">PWD</a></li>
+                                <li><a href="#">Solo Parent</a></li>
+                                @if (User.IsInRole("Social Worker"))
+                                {
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">User</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            *@
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <div class="col-md-12">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                            <th>
+                                Home Visit
+                            </th>
+                            <th>
+                                Release
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Client.getFullName()
+                                </td>
+                                <td>
+                                    @item.Status
+                                </td>
+                                <td>
+                                    @item.ApplicationDate.ToString("M/dd/yy hh:ss tt")
+                                </td>
+                                <td>
+                                    @if (item.InterviewDate != null)
+                                    {
+                                        <text>@item.InterviewDate.Value.ToString("M/dd/yy hh:mm tt")</text>
+                                    }
+                                    else
+                                    {
+                                        <text>N/A</text>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ReleaseDate != null)
+                                    {
+                                        <text>@item.ReleaseDate.Value.ToString("M/dd/yy hh:mm tt")</text>
+                                    }
+                                    else
+                                    {
+                                        <text>N/A</text>
+                                    }
+                                </td>
+                                <td class="content-align-right">
+                                    <a class="btn btn-primary btn-xs" data-toggle="tooltip" title="Manage" href="@Url.Action("Manage","Clients", new { @id = item.Client.ClientId })"><span class="glyphicon glyphicon-edit"></span></a>
+
+                                    <a class="btn btn-primary btn-xs" target="_blank" data-toggle="tooltip" title="View Requirements" href="@Url.Action("Requirements","Clients", new { @id = item.Client.ClientId })"><span class="glyphicon glyphicon-file"></span></a>
+
+                                    @if (item.Status == "Pending")
+                                    {
+                                        <a class="btn btn-success btn-xs" href="@Url.Action("UpdateSPHomeVisit","SoloParents", new { id = item.SoloParentId })">Update to For Home Visit <span class="glyphicon glyphicon-arrow-up"></span></a>
+                                        @*
+                                            <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="View PWD Info" href="@Url.Action("View","PWDs", new { @id = item.ClientId })"><span class="glyphicon glyphicon-share"></span></a>
+                                        *@
+                                    }
+
+                                    @if (item.Status == "For Home Visit")
+                                    {
+                                        <a class="btn btn-success btn-xs mswd-homeVisitModal" data-id="@item.SoloParentId" href="#">Modify Home Visit Date <span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a class="btn btn-success btn-xs" href="@Url.Action("UpdateSPApproved","SoloParents", new { id = item.SoloParentId })">Approve Application <span class="glyphicon glyphicon-arrow-up"></span></a>
+                                    }
+
+                                    @if (item.Status == "Approved")
+                                    {
+                                        <a class="btn btn-success btn-xs mswd-releaseDateModal" data-id="@item.SoloParentId" href="#">Modify Release Date <span class="glyphicon glyphicon-calendar"></span></a>
+                                        <a class="btn btn-success btn-xs" href="@Url.Action("UpdateSPHomeVisit","SoloParents", new { id = item.SoloParentId })">Update to For Home Visit<span class="glyphicon glyphicon-arrow-up"></span></a>
+                                    }
+
+                                    @if (item.Status != "Rejected")
+                                    {
+                                        <a class="btn btn-danger btn-xs" href="@Url.Action("UpdateSPRejected","SoloParents", new { id = item.SoloParentId })">Reject <span class="glyphicon glyphicon-ban-circle"></span></a>
+                                    }
+
+                                    @if (item.Status == "Rejected")
+                                    {
+                                        <a class="btn btn-success btn-xs" href="@Url.Action("UpdateSPPending","SoloParents", new { id = item.SoloParentId })">Update to Pending <span class="glyphicon glyphicon-arrow-up"></span></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var datatable = $("table").DataTable({
+                paging: true,
+                "pageLength": 20,
+                "dom": "<'row'<'table-container'<'table-responsive'rt>>><'table-footer'<'col-md-6'i><'col-md-6'p>>",
+                "columnDefs": [
+                    { "orderable": false, "targets": 5 }
+                ]
+            });
+
+            $(".all-search").keyup(function () {
+                datatable.search($(this).val()).draw();
+            });
+
+            $(".mswd-homeVisitModal").click(function () {
+                $("#homeVisitModal").modal();
+                var id = $(this).data("id");
+                $("#homeVisitSeniorCitizenId").val(id);
+            });
+
+            $(".mswd-releaseDateModal").click(function () {
+                $("#releaseDateModal").modal();
+                var id = $(this).data("id");
+                $("#releaseDateSeniorCitizenId").val(id);
+            });
+        });
+    </script>
+}
