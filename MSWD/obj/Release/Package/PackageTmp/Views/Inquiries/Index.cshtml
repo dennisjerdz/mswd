@@ -20,8 +20,31 @@
                         <option value="Requirement">Requirement</option>
                     </select>
 
-                    <label class="form-control">Message</label>
+                    <br />
+
+                    <label class="control-label">Message</label>
                     <input class="form-control" name="Message" placeholder="Input your inquiry here" type="text" value="" required/>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="replyModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Reply", "Inquiries", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reply to Inquiry</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="inquiryIdInput" name="InquiryId"/>
+                    <input class="form-control" name="Message" placeholder="Input your reply here" type="text" value="" required />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Submit</button>
@@ -111,7 +134,15 @@
                                     @item.Category
                                 </td>
                                 <td>
-                                    <a data-toggle="tooltip" title="@item.Content"  href="#">@item.Content.Substring(0, 40)</a>
+                                    @if (item.Content.Length > 49)
+                                    {
+                                        <a data-toggle="tooltip" title="@item.Content" href="#">@item.Content.Substring(0, 50) ...</a>
+                                    }
+                                    else
+                                    {
+                                        <a data-toggle="tooltip" title="@item.Content" href="#">@item.Content</a>
+                                    }
+                                    
                                 </td>
                                 <td>
                                     @if(item.Status == "Pending")
@@ -124,11 +155,18 @@
                                         <font class="mswd-green-txt">Resolved</font>
                                     }
                                 </td>
+                                <td>
+                                    @item.DateCreated.ToString("M/dd/yy hh:mm tt")
+                                </td>
                                 <td class="content-align-right">
-                                    <a class="btn btn-primary btn-xs" href="#">View Replies <span class="glyphicon glyphicon-inbox"></span></a>
+                                    @*
+                                        <a class="btn btn-primary btn-xs" href="#">View Replies <span class="glyphicon glyphicon-inbox"></span></a>
+                                    *@
 
                                     @if (User.IsInRole("Social Worker"))
                                     {
+                                        <a class="btn btn-info btn-xs mswd-replyModal" data-id="@item.InquiryId">Reply <span class="glyphicon glyphicon-send"></span></a>
+
                                         if (item.Status == "Pending")
                                         {
                                             <a class="btn btn-success btn-xs" href="@Url.Action("Resolve","Inquiries", new { @id = item.InquiryId })">Resolve <span class="glyphicon glyphicon-check"></span></a>
@@ -165,10 +203,10 @@
                 datatable.search($(this).val()).draw();
             });
 
-            $(".mswd-releaseDateModal").click(function () {
-                $("#releaseDateModal").modal();
+            $(".mswd-replyModal").click(function () {
+                $("#replyModal").modal();
                 var id = $(this).data("id");
-                $("#releaseDateSeniorCitizenId").val(id);
+                $("#inquiryIdInput").val(id);
             });
         });
     </script>

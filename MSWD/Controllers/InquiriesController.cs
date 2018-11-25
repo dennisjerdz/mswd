@@ -7,12 +7,42 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MSWD.Models;
+using System.Web.Configuration;
+using Globe.Connect;
+using System.Diagnostics;
 
 namespace MSWD.Controllers
 {
     public class InquiriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        #region SMS
+        public string short_code = WebConfigurationManager.AppSettings["ShortCode"];
+
+        private ActionResult SMS(string mobile_number, string message)
+        {
+            MobileNumber mb = db.MobileNumbers.FirstOrDefault(m => m.MobileNo == mobile_number);
+            string access_token = mb.Token;
+
+            if (access_token != null)
+            {
+                Sms sms = new Sms(short_code, access_token);
+
+                // mobile number argument is with format 09, convert it to +639
+                string globe_format_receiver = "+63" + mobile_number.Substring(1);
+
+                dynamic response = sms.SetReceiverAddress(globe_format_receiver)
+                    .SetMessage(message)
+                    .SendMessage()
+                    .GetDynamicResponse();
+
+                Trace.TraceInformation("Sent message; " + message + " to; " + globe_format_receiver + ".");
+            }
+
+            return null;
+        }
+        #endregion
 
         // GET: Inquiries
         public ActionResult Index(int? id)
@@ -83,24 +113,85 @@ namespace MSWD.Controllers
             }
         }
 
-        public ActionResult Revert()
+        public ActionResult Revert(int? id)
         {
-            return null;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Inquiry inquiry = db.Inquiries.Find(id);
+            if (inquiry == null)
+            {
+                return HttpNotFound();
+            }
+
+            inquiry.Status = "Pending";
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { id = inquiry.ClientId });
         }
 
-        public ActionResult Resolve()
+        public ActionResult Resolve(int? id)
         {
-            return null;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Inquiry inquiry = db.Inquiries.Find(id);
+            if (inquiry == null)
+            {
+                return HttpNotFound();
+            }
+
+            inquiry.Status = "Resolved";
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { id = inquiry.ClientId });
         }
 
+        [HttpPost]
         public ActionResult Reply()
         {
-            return null;
+            string message = Request.Form["Message"];
+            string inquiryId = Request.Form["InquiryId"];
+
+            Inquiry inquiry = db.Inquiries.Find(Convert.ToInt16(inquiryId));
+
+            #region SMS NOTIF
+            if (inquiry.Client.MobileNumbers != null)
+            {
+                MobileNumber mb = inquiry.Client.MobileNumbers.FirstOrDefault(m => m.IsDisabled == false && m.Token != null);
+
+                if (mb != null)
+                {
+                    try
+                    {
+                        SMS(mb.MobileNo, message);
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceInformation(e.Message);
+                    }
+                }
+            }
+            #endregion
+
+            return RedirectToAction("Index", new { id = inquiry.ClientId });
         }
 
-        public ActionResult Replies()
+        public ActionResult Replies(int? id)
         {
-            return null;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Inquiry inquiry = db.Inquiries.Find(id);
+            if (inquiry == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(inquiry);
         }
 
         // GET: Inquiries/Details/5

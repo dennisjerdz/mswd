@@ -370,6 +370,7 @@ namespace MSWD.Controllers
 
                     Inquiry i = new Inquiry();
                     i.DateCreated = DateTime.UtcNow.AddHours(8);
+                    i.Status = "Pending";
                     i.ClientId = pm.ClientId;
                     i.Category = "Requirement";
                     i.MessageId = record_msg.MessageId;
