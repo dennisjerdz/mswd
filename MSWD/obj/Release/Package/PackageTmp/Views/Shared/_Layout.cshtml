@@ -25,6 +25,7 @@
                         <li><a href="@Url.Action("Apply","Clients")">Apply</a></li>
                         <li><a href="@Url.Action("Index","MobileNumbers")">Mobile Numbers</a></li>
                         <li><a href="@Url.Action("Requirements","Clients")">Requirements</a></li>
+                        <li><a href="@Url.Action("Index","Inquiries")">Inquiries</a></li>
                     }
 
                     @if (User.IsInRole("Social Worker") || User.IsInRole("OIC"))
@@ -33,10 +34,10 @@
                         <li><a href="@Url.Action("Index","SeniorCitizens")">Senior Citizens</a></li>
                         <li><a href="@Url.Action("Index","PWDs")">PWD</a></li>
                         <li><a href="@Url.Action("Index","SoloParents")">Solo Parent</a></li>
-                        <li><a href="#">Reports</a></li>
+                        <li><a href="@Url.Action("Index","Inquiries", new { id = "" })">Inquiries</a></li>
                     }
                     
-                    <li><a href="@Url.Action("Index","Inquiries")">Inquiries</a></li>
+                    
                     <li><a class="menu-toggle" href="#" style="color:#9bc5ff;">Hide Sidebar</a></li>
                 </ul>
             </div>

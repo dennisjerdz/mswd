@@ -128,6 +128,25 @@ namespace MSWD.Controllers
             inquiry.Status = "Pending";
             db.SaveChanges();
 
+            #region SMS NOTIF
+            if (inquiry.Client.MobileNumbers != null)
+            {
+                MobileNumber mb = inquiry.Client.MobileNumbers.FirstOrDefault(m => m.IsDisabled == false && m.Token != null);
+
+                if (mb != null)
+                {
+                    try
+                    {
+                        SMS(mb.MobileNo, "Your inquiry; " + inquiry.Content + ", has been reverted to Pending.");
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceInformation(e.Message);
+                    }
+                }
+            }
+            #endregion
+
             return RedirectToAction("Index", new { id = inquiry.ClientId });
         }
 
@@ -145,6 +164,25 @@ namespace MSWD.Controllers
 
             inquiry.Status = "Resolved";
             db.SaveChanges();
+
+            #region SMS NOTIF
+            if (inquiry.Client.MobileNumbers != null)
+            {
+                MobileNumber mb = inquiry.Client.MobileNumbers.FirstOrDefault(m => m.IsDisabled == false && m.Token != null);
+
+                if (mb != null)
+                {
+                    try
+                    {
+                        SMS(mb.MobileNo, "Your inquiry; " + inquiry.Content + ", is now resolved.");
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceInformation(e.Message);
+                    }
+                }
+            }
+            #endregion
 
             return RedirectToAction("Index", new { id = inquiry.ClientId });
         }
