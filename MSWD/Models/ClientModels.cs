@@ -245,6 +245,8 @@ namespace MSWD.Models
         public virtual List<Requirement> Requirements { get; set; }
         public virtual List<ClientNote> ClientNotes { get; set; }
         public virtual List<ClientBeneficiary> ClientBeneficiaries { get; set; }
+        public virtual List<MobileNumber> MobileNumbers { get; set; }
+        public virtual List<Inquiry> Inquiries { get; set; }
     }
 
     public class ClientNote
@@ -459,16 +461,18 @@ namespace MSWD.Models
         public int ClientId { get; set; }
         public int? MessageId { get; set; }
         public string Status { get; set; }
-        public string Resolution { get; set; }
+        public string Category { get; set; }
+        public string Content { get; set; }
 
         public DateTime DateCreated { get; set; }
         public virtual Client Client { get; set; }
         public virtual Message Message { get; set; }
+        public virtual List<InquiryReply> InquiryReplies { get; set; }
     }
 
-    public class InquiryNote
+    public class InquiryReply
     {
-        public int InquiryNoteId { get; set; }
+        public int InquiryReplyId { get; set; }
         public int InquiryId { get; set; }
 
         public string UserName { get; set; }

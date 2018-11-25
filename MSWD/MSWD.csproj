@@ -204,7 +204,9 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InquiriesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MobileNumbersController.cs" />
     <Compile Include="Controllers\PwdsController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\SeniorCitizensController.cs" />
@@ -269,6 +271,10 @@
     <Compile Include="Migrations\201811230449359_soloParentRemoveDateCreated.cs" />
     <Compile Include="Migrations\201811230449359_soloParentRemoveDateCreated.Designer.cs">
       <DependentUpon>201811230449359_soloParentRemoveDateCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811251433591_Inquiries.cs" />
+    <Compile Include="Migrations\201811251433591_Inquiries.Designer.cs">
+      <DependentUpon>201811251433591_Inquiries.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -399,6 +405,16 @@
     <Content Include="Views\Pwds\Details.cshtml" />
     <Content Include="Views\Pwds\Edit.cshtml" />
     <Content Include="Views\Pwds\Index.cshtml" />
+    <Content Include="Views\MobileNumbers\Create.cshtml" />
+    <Content Include="Views\MobileNumbers\Delete.cshtml" />
+    <Content Include="Views\MobileNumbers\Details.cshtml" />
+    <Content Include="Views\MobileNumbers\Edit.cshtml" />
+    <Content Include="Views\MobileNumbers\Index.cshtml" />
+    <Content Include="Views\Inquiries\Create.cshtml" />
+    <Content Include="Views\Inquiries\Delete.cshtml" />
+    <Content Include="Views\Inquiries\Details.cshtml" />
+    <Content Include="Views\Inquiries\Edit.cshtml" />
+    <Content Include="Views\Inquiries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -454,6 +470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811230449359_soloParentRemoveDateCreated.resx">
       <DependentUpon>201811230449359_soloParentRemoveDateCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251433591_Inquiries.resx">
+      <DependentUpon>201811251433591_Inquiries.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -72,6 +72,8 @@ namespace MSWD.Models
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<RequirementAttachment> RequirementAttachments { get; set; }
         public DbSet<RequirementComment> RequirementComments { get; set; }
+        public DbSet<Inquiry> Inquiries { get; set; }
+        public DbSet<InquiryReply> InquiryReplies { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

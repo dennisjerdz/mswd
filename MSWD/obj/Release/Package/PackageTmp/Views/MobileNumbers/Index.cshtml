@@ -1,0 +1,204 @@
+﻿@model IEnumerable<MSWD.Models.MobileNumber>
+
+@{
+    ViewBag.Title = "Mobile Number";
+}
+
+<div id="addNumberModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("AddMobileNumber", "MobileNumbers", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Mobile Number</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="control-label">Mobile Number Format: 11 Digit Mobile Number; 09xxxxxxxxx</label>
+                    <input class="form-control" name="MobileNumber" placeholder="Input here" type="number" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="helpModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Verification Guide</h4>
+            </div>
+            <div class="modal-body">
+                <h3>To receive SMS alerts;</h3>
+                <ol>
+                    <li>Text INFO to 21580678</li>
+                    <li>Reply YES</li>
+                </ol>
+
+                <h3>SMS commands (Not Case-sensitive)</h3>
+                <ul>
+                    <li>Inquire MESSAGE</li>
+                    <li>Application Status</li>
+                    <li>FAQ</li>
+                    <li>Learn More</li>
+                </ul>
+
+                <h3>Mobile Number Status</h3>
+                <ul>
+                    <li>ENABLED - will receive SMS alerts or replies</li>
+                    <li>DISABLED - will not receive SMS alerts or replies</li>
+                    <li><strong>Only one ENABLED Mobile Number</strong> can receive SMS alerts.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            @if (User.IsInRole("Client"))
+            {
+                <div class="col-md-8">
+                    @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+                </div>
+
+                <div class="col-md-2">
+                    <input class="form-control all-search" placeholder="Search" />
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNumberModal">
+                        Add Number <span class="glyphicon glyphicon-phone"></span>
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-8">
+                    @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+                </div>
+
+                <div class="col-md-4">
+                    <input class="form-control all-search" placeholder="Search" />
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    @if (ViewBag.Error != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger"><strong>Error: </strong> @ViewBag.Error</div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="table-responsive">
+            <div class="col-md-12">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mobile Number
+                            </th>
+                            <th>
+                                Verified
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Date Created
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.MobileNo
+                                </td>
+                                <td>
+                                    @if (item.Token != null)
+                                    {
+                                        <font class="mswd-green-txt">Verified</font>
+                                    }else
+                                    {
+                                        <font class="mswd-orange-txt">Not Verified</font>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.IsDisabled)
+                                    {
+                                        <font class="mswd-orange-txt">Disabled</font>
+                                    }
+                                    else
+                                    {
+                                        <font class="mswd-green-txt">Active</font>
+                                    }
+                                </td>
+                                <td>
+                                    @item.DateCreated.ToString("M/dd/yy hh:ss tt")
+                                </td>
+                                <td class="content-align-right">
+                                    <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#helpModal" href="#">Help <span class="glyphicon glyphicon-question-sign"></span></a>
+
+                                    @if (item.IsDisabled)
+                                    {
+                                        <a class="btn btn-success btn-xs" href="@Url.Action("RemoveDisabled","MobileNumbers", new { @id = item.MobileNumberId })">Enable <span class="glyphicon glyphicon-check"></span></a>
+                                        <a class="btn btn-danger btn-xs" href="@Url.Action("Delete","MobileNumbers", new {  @id = item.MobileNumberId })">Delete <span class="glyphicon glyphicon-remove"></span></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger btn-xs" href="@Url.Action("Disable","MobileNumbers", new { @id = item.MobileNumberId })">Disable <span class="glyphicon glyphicon-ban-circle"></span></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var datatable = $("table").DataTable({
+                paging: true,
+                "pageLength": 20,
+                "dom": "<'row'<'table-container'<'table-responsive'rt>>><'table-footer'<'col-md-6'i><'col-md-6'p>>",
+                "columnDefs": [
+                    { "orderable": false, "targets": 3 }
+                ]
+            });
+
+            $(".all-search").keyup(function () {
+                datatable.search($(this).val()).draw();
+            });
+
+            $(".mswd-releaseDateModal").click(function () {
+                $("#releaseDateModal").modal();
+                var id = $(this).data("id");
+                $("#releaseDateSeniorCitizenId").val(id);
+            });
+        });
+    </script>
+}

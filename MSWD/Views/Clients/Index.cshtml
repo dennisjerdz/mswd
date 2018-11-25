@@ -108,6 +108,8 @@
                                 <td class="content-align-right">
                                     <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Manage" href="@Url.Action("Manage","Clients", new { @id = item.ClientId })"><span class="glyphicon glyphicon-edit"></span></a>
                                     
+                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" title="View Inquiries" href="@Url.Action("Index","Inquiries", new { @id = item.ClientId })"><span class="glyphicon glyphicon-inbox"></span></a>
+
                                     @if (item.SeniorCitizen != null)
                                     {
                                         <a class="btn btn-warning btn-sm" data-toggle="tooltip" title="Applied for Senior Citizen" href="#">@item.SeniorCitizen.Status <span class="glyphicon glyphicon-info-sign"></span></a>

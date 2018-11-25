@@ -10,6 +10,9 @@ using MSWD.Models;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
 using System.Security.Claims;
+using Globe.Connect;
+using System.Diagnostics;
+using System.Web.Configuration;
 
 namespace MSWD.Controllers
 {
@@ -17,6 +20,33 @@ namespace MSWD.Controllers
     public class ClientsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        #region SMS
+        public string short_code = WebConfigurationManager.AppSettings["ShortCode"];
+
+        private ActionResult SMS(string mobile_number, string message)
+        {
+            MobileNumber mb = db.MobileNumbers.FirstOrDefault(m => m.MobileNo == mobile_number);
+            string access_token = mb.Token;
+
+            if (access_token != null)
+            {
+                Sms sms = new Sms(short_code, access_token);
+
+                // mobile number argument is with format 09, convert it to +639
+                string globe_format_receiver = "+63" + mobile_number.Substring(1);
+
+                dynamic response = sms.SetReceiverAddress(globe_format_receiver)
+                    .SetMessage(message)
+                    .SendMessage()
+                    .GetDynamicResponse();
+
+                Trace.TraceInformation("Sent message; " + message + " to; " + globe_format_receiver + ".");
+            }
+
+            return null;
+        }
+        #endregion
 
         // GET: Clients
         public ActionResult Index()

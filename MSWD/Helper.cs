@@ -26,7 +26,7 @@ namespace MSWD
             CivilStatusList.Add(new SelectListItem() { Text = "Single", Value = "Single" });
             CivilStatusList.Add(new SelectListItem() { Text = "Married", Value = "Married" });
             CivilStatusList.Add(new SelectListItem() { Text = "Widowed", Value = "Widowed" });
-            CivilStatusList.Add(new SelectListItem() { Text = "Devorced", Value = "Devorced" });
+            CivilStatusList.Add(new SelectListItem() { Text = "Divorced", Value = "Divorced" });
 
             ResidencyList.Add(new SelectListItem() { Text = "House Owner", Value = "House Owner" });
             ResidencyList.Add(new SelectListItem() { Text = "Sharer", Value = "Sharer" });

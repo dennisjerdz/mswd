@@ -1,0 +1,175 @@
+﻿@model IEnumerable<MSWD.Models.Inquiry>
+
+@{
+    ViewBag.Title = "Inquiries";
+}
+
+<div id="inquiryModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("AddInquiry", "Inquiries", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Inquiry</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="control-label">Inquiry Category</label>
+                    <select class="form-control" name="Category">
+                        <option value="Question">Question</option>
+                        <option value="Requirement">Requirement</option>
+                    </select>
+
+                    <label class="form-control">Message</label>
+                    <input class="form-control" name="Message" placeholder="Input your inquiry here" type="text" value="" required/>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            @if (User.IsInRole("Client"))
+            {
+                <div class="col-md-8">
+                    @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+                </div>
+
+                <div class="col-md-2">
+                    <input class="form-control all-search" placeholder="Search" />
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#inquiryModal">
+                        Add Inquiry <span class="glyphicon glyphicon-question-sign"></span>
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-8">
+                    @ViewBag.Title&emsp;>&emsp;<font class="red-highlight">List</font>
+                </div>
+
+                <div class="col-md-4">
+                    <input class="form-control all-search" placeholder="Search" />
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    @if (ViewBag.Error != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger"><strong>Error: </strong> @ViewBag.Error</div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="table-responsive">
+            <div class="col-md-12">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Client Name
+                            </th>
+                            <th>
+                                Category
+                            </th>
+                            <th>
+                                Inquiry
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Date Created
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Client.GivenName
+                                </td>
+                                <td>
+                                    @item.Category
+                                </td>
+                                <td>
+                                    <a data-toggle="tooltip" title="@item.Content"  href="#">@item.Content.Substring(0, 40)</a>
+                                </td>
+                                <td>
+                                    @if(item.Status == "Pending")
+                                    {
+                                        <font class="mswd-orange-txt">Pending</font>
+                                    }
+
+                                    @if (item.Status == "Resolved")
+                                    {
+                                        <font class="mswd-green-txt">Resolved</font>
+                                    }
+                                </td>
+                                <td class="content-align-right">
+                                    <a class="btn btn-primary btn-xs" href="#">View Replies <span class="glyphicon glyphicon-inbox"></span></a>
+
+                                    @if (User.IsInRole("Social Worker"))
+                                    {
+                                        if (item.Status == "Pending")
+                                        {
+                                            <a class="btn btn-success btn-xs" href="@Url.Action("Resolve","Inquiries", new { @id = item.InquiryId })">Resolve <span class="glyphicon glyphicon-check"></span></a>
+                                        }
+
+                                        if (item.Status == "Resolved")
+                                        {
+                                            <a class="btn btn-success btn-xs" href="@Url.Action("Revert","Inquiries", new { @id = item.InquiryId })">Revert <span class="glyphicon glyphicon-repeat"></span></a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var datatable = $("table").DataTable({
+                paging: true,
+                "pageLength": 20,
+                "dom": "<'row'<'table-container'<'table-responsive'rt>>><'table-footer'<'col-md-6'i><'col-md-6'p>>",
+                "columnDefs": [
+                    { "orderable": false, "targets": 5 }
+                ]
+            });
+
+            $(".all-search").keyup(function () {
+                datatable.search($(this).val()).draw();
+            });
+
+            $(".mswd-releaseDateModal").click(function () {
+                $("#releaseDateModal").modal();
+                var id = $(this).data("id");
+                $("#releaseDateSeniorCitizenId").val(id);
+            });
+        });
+    </script>
+}

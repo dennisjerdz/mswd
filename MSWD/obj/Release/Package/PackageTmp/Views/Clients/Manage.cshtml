@@ -34,36 +34,30 @@
 <div class="container">
     <div class="page-title">
         <div class="row">
-            <div class="col-md-6 header-page">
+            <div class="col-md-8 header-page">
                 <a href="@Url.Action("Index")">@ViewBag.Title</a>&emsp;>&emsp;<font class="red-highlight">Manage</font>
             </div>
 
             <div class="col-md-2">
                 @if (Model.SeniorCitizen != null)
                 {
-                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Senior Citizen Info" href="@Url.Action("View","SeniorCitizens", new { @id = Model.ClientId })">Senior Citizen <span class="glyphicon glyphicon-share"></span></a>
+                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Senior Citizen Info" href="#">Senior Citizen <span class="glyphicon glyphicon-share"></span></a>
                 }
 
                 @if (Model.SoloParent != null)
                 {
-                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Solo Parent Info" href="@Url.Action("View","SoloParents", new { @id = Model.ClientId })">Solo Parent <span class="glyphicon glyphicon-share"></span></a>
+                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Solo Parent Info" href="#">Solo Parent <span class="glyphicon glyphicon-share"></span></a>
                 }
 
                 @if (Model.Pwd != null)
                 {
-                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View PWD Info" href="@Url.Action("View","PWDs", new { @id = Model.ClientId })">PWD <span class="glyphicon glyphicon-share"></span></a>
+                    <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View PWD Info" href="#">PWD <span class="glyphicon glyphicon-share"></span></a>
                 }
             </div>
 
             <div class="col-md-2">
                 <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNoteModal">
                     Add Note <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
-
-            <div class="col-md-2">
-                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNumberModal">
-                    Add Number <span class="glyphicon glyphicon-phone"></span>
                 </button>
             </div>
         </div>
@@ -94,19 +88,19 @@
                     <div class="form-group">
                         <div class="col-md-4">
                             @Html.LabelFor(model => model.GivenName, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.GivenName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.GivenName, new { htmlAttributes = new { @class = "form-control", @maxlength = "32" } })
                             @Html.ValidationMessageFor(model => model.GivenName, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-md-4">
                             @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @maxlength = "32" } })
                             @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-md-4">
                             @Html.LabelFor(model => model.SurName, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.SurName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.SurName, new { htmlAttributes = new { @class = "form-control", @maxlength = "32" } })
                             @Html.ValidationMessageFor(model => model.SurName, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -114,7 +108,22 @@
                     <div class="form-group">
                         <div class="col-md-3">
                             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+
+                            @if (Model.BirthDate != null)
+                            {
+                                @Html.TextBoxFor(m => m.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @value = Model.BirthDate.ToString("yyyy-MM-dd") })
+                                
+                                @*
+                                    @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date", @value = Model.BirthDate.ToString("yyyy-MM-dd") } })
+                                *@
+                                
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                            }
+
+                            
                             @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                         </div>
 
@@ -158,7 +167,17 @@
                     <div class="form-group marriage-form">
                         <div class="col-md-6">
                             @Html.LabelFor(model => model.DateOfMarriage, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.DateOfMarriage, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+
+                            @if (Model.DateOfMarriage != null)
+                            {
+                                @Html.TextBoxFor(m => m.DateOfMarriage, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @value = Model.DateOfMarriage.Value.ToString("yyyy-MM-dd") })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.DateOfMarriage, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                            }
+
+
                             @Html.ValidationMessageFor(model => model.DateOfMarriage, "", new { @class = "text-danger" })
                         </div>
 
@@ -172,13 +191,22 @@
                     <div class="form-group marriage-form">
                         <div class="col-md-4">
                             @Html.LabelFor(model => model.SpouseName, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.SpouseName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.SpouseName, new { htmlAttributes = new { @class = "form-control", @maxlength = "32" } })
                             @Html.ValidationMessageFor(model => model.SpouseName, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-md-4">
                             @Html.LabelFor(model => model.SpouseBirthDate, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.SpouseBirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+
+                            @if (Model.SpouseBirthDate != null)
+                            {
+                                @Html.TextBoxFor(m => m.SpouseBirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @value = Model.SpouseBirthDate.Value.ToString("yyyy-MM-dd") })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.SpouseBirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                            }
+
                             @Html.ValidationMessageFor(model => model.SpouseBirthDate, "", new { @class = "text-danger" })
                         </div>
 
@@ -206,7 +234,16 @@
 
                         <div class="col-md-4">
                             @Html.LabelFor(model => model.StartOfResidency, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.StartOfResidency, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+
+                            @if (Model.StartOfResidency != null)
+                            {
+                                @Html.TextBoxFor(m => m.StartOfResidency, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @value = Model.StartOfResidency.Value.ToString("yyyy-MM-dd") })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.StartOfResidency, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                            }
+
                             @Html.ValidationMessageFor(model => model.StartOfResidency, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -254,7 +291,7 @@
 
                                     <div class="form-group">
                                         <div class="col-md-6">
-                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].Name, htmlAttributes: new { @class = "control-label" })
+                                            @Html.LabelFor(model => model.ClientBeneficiaries[i].Name, htmlAttributes: new { @class = "control-label", @maxlength="32" })
                                             @Html.EditorFor(model => model.ClientBeneficiaries[i].Name, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].Name, "", new { @class = "text-danger" })
                                         </div>
@@ -267,7 +304,16 @@
 
                                         <div class="col-md-3">
                                             @Html.LabelFor(model => model.ClientBeneficiaries[i].BirthDate, htmlAttributes: new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.ClientBeneficiaries[i].BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+
+                                            @if (Model.ClientBeneficiaries[i].BirthDate != null)
+                                            {
+                                                @Html.TextBoxFor(model => model.ClientBeneficiaries[i].BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @value = Model.ClientBeneficiaries[i].BirthDate.Value.ToString("yyyy-MM-dd") })
+                                            }
+                                            else
+                                            {
+                                                @Html.EditorFor(model => model.ClientBeneficiaries[i].BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                                            }
+                                            
                                             @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].BirthDate, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -367,59 +413,62 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="form-header" style="margin-top:30px;">
-                    <div class="col-md-4">
-                        <h4>Mobile #</h4>
-                    </div>
+            @*
+                <div class="form-group">
+                    <div class="form-header" style="margin-top:30px;">
+                        <div class="col-md-4">
+                            <h4>Mobile #</h4>
+                        </div>
 
-                    <div class="col-md-8">
-                        <input class="form-control mobile-numbers-search" placeholder="Search" />
+                        <div class="col-md-8">
+                            <input class="form-control mobile-numbers-search" placeholder="Search" />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-12" style="margin-top:55px;">
-                    <table id="table-mobile-numbers" class="table no-sort">
-                        <thead>
-                            <tr>
-                                <th>Number</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                <div class="form-group">
+                    <div class="col-md-12" style="margin-top:55px;">
+                        <table id="table-mobile-numbers" class="table no-sort">
+                            <thead>
+                                <tr>
+                                    <th>Number</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            @foreach (var i in Model.ClientNotes.OrderByDescending(c => c.DateCreated))
-                            {
-                                <tr data-toggle="tooltip" title="@i.DateCreated - @i.CreatedBy.UserName">
-                                    @if (i.Done == 0)
-                                    {
-                                        <td style="color:#4f4f4f;">@i.Note</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="color:#0c9a0f;"><strong>@i.Note</strong></td>
-                                    }
-
-                                    <td style="text-align:right;">
+                            <tbody>
+                                @foreach (var i in Model.ClientNotes.OrderByDescending(c => c.DateCreated))
+                                {
+                                    <tr data-toggle="tooltip" title="@i.DateCreated - @i.CreatedBy.UserName">
                                         @if (i.Done == 0)
                                         {
-                                            <a class="btn btn-xs btn-success" href="@Url.Action("MarkDone","Clients",new { @id=i.ClientNoteId })">
-                                                <span class="glyphicon glyphicon-check"></span>
-                                            </a>
+                                            <td style="color:#4f4f4f;">@i.Note</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="color:#0c9a0f;"><strong>@i.Note</strong></td>
                                         }
 
-                                        <a class="btn btn-xs btn-danger" href="@Url.Action("RemoveNote","Clients",new { @id=i.ClientNoteId })">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                                        <td style="text-align:right;">
+                                            @if (i.Done == 0)
+                                            {
+                                                <a class="btn btn-xs btn-success" href="@Url.Action("MarkDone","Clients",new { @id=i.ClientNoteId })">
+                                                    <span class="glyphicon glyphicon-check"></span>
+                                                </a>
+                                            }
+
+                                            <a class="btn btn-xs btn-danger" href="@Url.Action("RemoveNote","Clients",new { @id=i.ClientNoteId })">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            *@
+            
         </div>
     </div>
 </div>
@@ -483,7 +532,7 @@
                     "<div class='form-group'>" +
                         "<div class='col-md-6'>" +
                             "<label class='control-label'>Name</label>" +
-                            "<input class='form-control' name='ClientBeneficiaries[" + i + "].Name' />" +
+                            "<input class='form-control' name='ClientBeneficiaries[" + i + "].Name' maxlength='32' />" +
                         "</div>" +
                         "<div class='col-md-3'>" +
                             "<label class='control-label'>Relationship</label>" +

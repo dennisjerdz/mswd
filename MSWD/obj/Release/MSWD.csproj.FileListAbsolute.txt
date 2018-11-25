@@ -96,3 +96,4 @@ C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.applicationDateto3.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.releaseDate.resources
 C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.soloParentRemoveDateCreated.resources
+C:\Users\Jerdz\Documents\Visual Studio 2015\Projects\MSWD\MSWD\obj\Release\MSWD.Migrations.Inquiries.resources

@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace MSWD.Controllers
@@ -15,7 +17,7 @@ namespace MSWD.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         //public string short_code = "21584812,21582183";
-        public string short_code = "21583725";
+        public string short_code = WebConfigurationManager.AppSettings["ShortCode"];
 
         // GET: SMS
         public ActionResult Index()
@@ -101,6 +103,8 @@ namespace MSWD.Controllers
 
             var pm = db.MobileNumbers.Include("Client").FirstOrDefault(m => m.MobileNo == mobile_number);
 
+            Trace.TraceInformation("Processing msg, Token: " + pm.Token);
+
             if (pm != null && pm.IsDisabled == false)
             {
                 /*
@@ -112,6 +116,7 @@ namespace MSWD.Controllers
                 db.Messages.Add(record_msg);
                 db.SaveChanges();
                 */
+
                 bool match = false;
                 string[] msg = customer_msg.ToLower().Split(' ');
 
@@ -139,7 +144,7 @@ namespace MSWD.Controllers
                     try
                     {
                         // use sms function
-                        SendSMS(mobile_number, "List of sms keywords: 'hello' - System will send an sms with your first name. '? <message>' - Ask a specific question that a Social Worker can respond to.");
+                        SendSMS(mobile_number, "List of sms keywords: 'hello' - System will send an sms with your first name. 'inquire <message>' - Ask a specific question that a Social Worker can respond to. 'application status' - Get Status of Pending Applications");
                     }
                     catch (Exception ex)
                     {
@@ -159,6 +164,233 @@ namespace MSWD.Controllers
                 }
                 #endregion
 
+                #region application status
+                if ((msg[0] == "application" && msg[1] == "status") || msg[0] == "application")
+                {
+                    StringBuilder to_send = new StringBuilder("Hello " + pm.Client.GivenName + ". ");
+
+                    #region senior citizen
+                    if (pm.Client.SeniorCitizen != null)
+                    {
+                        string scStatus = pm.Client.SeniorCitizen.Status;
+
+                        if (scStatus == "Pending")
+                        {
+                            to_send.Append("Your Senior Citizen Application is" + scStatus + ".");
+                        }
+
+                        if (scStatus == "For Home Visit")
+                        {
+                            if (pm.Client.SeniorCitizen.InterviewDate == null)
+                            {
+                                to_send.Append("Your Senior Citizen Application is" + scStatus + ", home visit date is not yet set.");
+                            }
+                            else
+                            {
+                                to_send.Append("Your Senior Citizen Application is" + scStatus + " and your home visit date is on " + pm.Client.SeniorCitizen.InterviewDate + ".");
+                            }
+                        }
+
+                        if (scStatus == "Approved")
+                        {
+                            if (pm.Client.SeniorCitizen.ReleaseDate == null)
+                            {
+                                to_send.Append("Your Senior Citizen Application is" + scStatus + ", release date is not yet set.");
+                            }
+                            else
+                            {
+                                to_send.Append("Your Senior Citizen Application is" + scStatus + " and your IDs will be released and can be claimed starting " + pm.Client.SeniorCitizen.ReleaseDate + ".");
+                            }
+                        }
+
+                        if (scStatus == "Rejected")
+                        {
+                            to_send.Append("Your Senior Citizen Application is" + scStatus + ". Please inquire at MSWD to verify.");
+                        }
+                    }
+                    #endregion
+
+                    #region pwd
+                    if (pm.Client.Pwd != null)
+                    {
+                        string pwdStatus = pm.Client.Pwd.Status;
+
+                        if (pwdStatus == "Pending")
+                        {
+                            to_send.Append("Your PWD Application is" + pwdStatus + ".");
+                        }
+
+                        if (pwdStatus == "For Home Visit")
+                        {
+                            if (pm.Client.SoloParent.InterviewDate == null)
+                            {
+                                to_send.Append("Your PWD Application is" + pwdStatus + ", interview date is not yet set.");
+                            }
+                            else
+                            {
+                                to_send.Append("Your PWD Application is" + pwdStatus + " and your interview date is on " + pm.Client.Pwd.InterviewDate + ".");
+                            }
+                        }
+
+                        if (pwdStatus == "Approved")
+                        {
+                            if (pm.Client.SoloParent.ReleaseDate == null)
+                            {
+                                to_send.Append("Your PWD Application is" + pwdStatus + ", release date is not yet set.");
+                            }
+                            else
+                            {
+                                to_send.Append("Your PWD Application is" + pwdStatus + " and your IDs will be released and can be claimed starting " + pm.Client.Pwd.ReleaseDate + ".");
+                            }
+                        }
+
+                        if (pwdStatus == "Rejected")
+                        {
+                            to_send.Append("Your PWD Application is" + pwdStatus + ". Please inquire at MSWD to verify.");
+                        }
+                    }
+                    #endregion
+
+                    #region solo parent
+                    if (pm.Client.SoloParent != null)
+                    {
+                        string spStatus = pm.Client.SoloParent.Status;
+
+                        if (spStatus == "Pending")
+                        {
+                            to_send.Append("Your Solo Parent Application is" + spStatus + ".");
+                        }
+
+                        if (spStatus == "For Home Visit")
+                        {
+                            if (pm.Client.SoloParent.InterviewDate == null)
+                            {
+                                to_send.Append("Your Solo Parent Application is" + spStatus + ", home visit date is not yet set.");
+                            }
+                            else
+                            {
+                                to_send.Append("Your Solo Parent Application is" + spStatus + " and your home visit date is on " + pm.Client.SoloParent.InterviewDate + ".");
+                            }
+                        }
+
+                        if (spStatus == "Approved")
+                        {
+                            if (pm.Client.SoloParent.ReleaseDate == null)
+                            {
+                                to_send.Append("Your Solo Parent Application is" + spStatus + ", release date is not yet set.");
+                            }
+                            else
+                            {
+                                to_send.Append("Your Solo Parent Application is" + spStatus + " and your IDs will be released and can be claimed starting " + pm.Client.SoloParent.ReleaseDate + ".");
+                            }
+                        }
+
+                        if (spStatus == "Rejected")
+                        {
+                            to_send.Append("Your Solo Parent Application is" + spStatus + ". Please inquire at MSWD to verify.");
+                        }
+                    }
+                    #endregion
+
+                    if (pm.Client.SoloParent == null && pm.Client.Pwd == null && pm.Client.SeniorCitizen == null)
+                    {
+
+                    }
+
+                    SendSMS(mobile_number, to_send.ToString());
+
+                    #region record msg
+                    var record_msg = new Message();
+                    record_msg.Body = customer_msg;
+                    record_msg.DateCreated = DateTime.UtcNow.AddHours(8);
+                    record_msg.MobileNumberId = pm.MobileNumberId;
+
+                    db.Messages.Add(record_msg);
+                    db.SaveChanges();
+                    #endregion
+
+                    match = true;
+                }
+                #endregion
+
+                #region inquire question
+                if (msg[0] == "inquire" && msg[1] == "question")
+                {
+                    string inquiry = string.Join(" ", msg.Skip(2));
+
+                    #region record msg
+                    Message record_msg = new Message();
+                    record_msg.Body = customer_msg;
+                    record_msg.DateCreated = DateTime.UtcNow.AddHours(8);
+                    record_msg.MobileNumberId = pm.MobileNumberId;
+
+                    db.Messages.Add(record_msg);
+                    db.SaveChanges();
+                    #endregion
+
+                    Inquiry i = new Inquiry();
+                    i.DateCreated = DateTime.UtcNow.AddHours(8);
+                    i.ClientId = pm.ClientId;
+                    i.Status = "Pending";
+                    i.Category = "Question";
+                    i.MessageId = record_msg.MessageId;
+                    i.Content = inquiry;
+
+                    db.Inquiries.Add(i);
+                    db.SaveChanges();
+
+                    try
+                    {
+                        // use sms function
+                        SendSMS(mobile_number, "Hello, " + pm.Client.GivenName + " your inquiry has been recorded. Please wait for an update.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceInformation(ex.Message);
+                    }
+
+                    match = true;
+                }
+                #endregion
+
+                #region inquire requirement
+                if (msg[0] == "inquire" && msg[1] == "requirement")
+                {
+                    string inquiry = string.Join(" ", msg.Skip(2));
+
+                    #region record msg
+                    Message record_msg = new Message();
+                    record_msg.Body = customer_msg;
+                    record_msg.DateCreated = DateTime.UtcNow.AddHours(8);
+                    record_msg.MobileNumberId = pm.MobileNumberId;
+
+                    db.Messages.Add(record_msg);
+                    db.SaveChanges();
+                    #endregion
+
+                    Inquiry i = new Inquiry();
+                    i.DateCreated = DateTime.UtcNow.AddHours(8);
+                    i.ClientId = pm.ClientId;
+                    i.Category = "Requirement";
+                    i.MessageId = record_msg.MessageId;
+                    i.Content = inquiry;
+
+                    db.Inquiries.Add(i);
+                    db.SaveChanges();
+
+                    try
+                    {
+                        // use sms function
+                        SendSMS(mobile_number, "Hello, " + pm.Client.GivenName + " your inquiry regarding Requirements has been recorded. Please wait for an update.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceInformation(ex.Message);
+                    }
+
+                    match = true;
+                }
+                #endregion
 
                 #region msg ticket
                 /*
@@ -226,7 +458,6 @@ namespace MSWD.Controllers
                 }
                 */
                 #endregion
-
 
                 #region create ticket
                 /*
@@ -661,7 +892,7 @@ namespace MSWD.Controllers
 
                 if (match == false)
                 {
-                    SendSMS(mobile_number, "Invalid keyword. This is the list of sms keywords: 'hello' - System will send an sms with your first name, 'compliance' - Send a summary of all issues associated with household if there are any, 'tickets' - Send a list of all tickets associated with household, '<Ticket ID> <message>' - Post a comment to the specific ticket ID that the social workers could view, 'Ticket <Ticket ID>' -  Show specific ticket details if exists, '? <message>' - Ask a specific question that a Social Worker can respond to.");
+                    SendSMS(mobile_number, "Invalid keyword. This is the list of sms keywords: 'hello' - System will send an sms with your first name. 'inquire <message>' - Ask a specific question that a Social Worker can respond to. 'application status' - Get Status of Pending Applications");
                 }
             }
             else
@@ -677,7 +908,6 @@ namespace MSWD.Controllers
                 
             }
 
-            //return Content(result.ToString(), "application/json");
             return null;
         }
         
@@ -686,6 +916,8 @@ namespace MSWD.Controllers
         {
             MobileNumber mb = db.MobileNumbers.FirstOrDefault(m => m.MobileNo == mobile_number);
             string access_token = mb.Token;
+
+            Trace.TraceInformation("Token: "+access_token);
 
             if (access_token != null)
             {

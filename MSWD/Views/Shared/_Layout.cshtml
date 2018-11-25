@@ -23,6 +23,7 @@
                     @if (User.IsInRole("Client"))
                     {
                         <li><a href="@Url.Action("Apply","Clients")">Apply</a></li>
+                        <li><a href="@Url.Action("Index","MobileNumbers")">Mobile Numbers</a></li>
                         <li><a href="@Url.Action("Requirements","Clients")">Requirements</a></li>
                     }
 
@@ -35,6 +36,7 @@
                         <li><a href="#">Reports</a></li>
                     }
                     
+                    <li><a href="@Url.Action("Index","Inquiries")">Inquiries</a></li>
                     <li><a class="menu-toggle" href="#" style="color:#9bc5ff;">Hide Sidebar</a></li>
                 </ul>
             </div>
