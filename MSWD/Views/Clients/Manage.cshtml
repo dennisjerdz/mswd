@@ -327,7 +327,7 @@
 
                                         <div class="col-md-3">
                                             @Html.LabelFor(model => model.ClientBeneficiaries[i].CivilStatus, htmlAttributes: new { @class = "control-label" })
-                                            @Html.DropDownListFor(model => model.ClientBeneficiaries[i].CivilStatus, lists.CivilStatusList, "-- Select Residency Type --", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.ClientBeneficiaries[i].CivilStatus, lists.CivilStatusList, "-- Select Residency Type --", new { @class = "form-control", @value = Model.ClientBeneficiaries[i].CivilStatus })
                                             @Html.ValidationMessageFor(model => model.ClientBeneficiaries[i].CivilStatus, "", new { @class = "text-danger" })
                                         </div>
 

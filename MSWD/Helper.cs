@@ -10,6 +10,7 @@ namespace MSWD
     {
         public List<SelectListItem> GenderList = new List<SelectListItem>();
         public List<SelectListItem> CivilStatusList = new List<SelectListItem>();
+        public List<SelectListItem> CivilStatusBList = new List<SelectListItem>();
         public List<SelectListItem> ResidencyList = new List<SelectListItem>();
         public List<SelectListItem> EAList = new List<SelectListItem>();
         public List<SelectListItem> ESList = new List<SelectListItem>();
@@ -27,6 +28,11 @@ namespace MSWD
             CivilStatusList.Add(new SelectListItem() { Text = "Married", Value = "Married" });
             CivilStatusList.Add(new SelectListItem() { Text = "Widowed", Value = "Widowed" });
             CivilStatusList.Add(new SelectListItem() { Text = "Divorced", Value = "Divorced" });
+
+            CivilStatusBList.Add(new SelectListItem() { Text = "Single", Value = "Single" });
+            CivilStatusBList.Add(new SelectListItem() { Text = "Married", Value = "Married" });
+            CivilStatusBList.Add(new SelectListItem() { Text = "Widowed", Value = "Widowed" });
+            CivilStatusBList.Add(new SelectListItem() { Text = "Divorced", Value = "Divorced" });
 
             ResidencyList.Add(new SelectListItem() { Text = "House Owner", Value = "House Owner" });
             ResidencyList.Add(new SelectListItem() { Text = "Sharer", Value = "Sharer" });

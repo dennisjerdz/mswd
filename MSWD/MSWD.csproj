@@ -287,6 +287,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chartJS\Chart.min.js" />
     <Content Include="Content\datatable\dataTables.bootstrap.min.css" />
     <Content Include="Content\datatable\jquery-ui.min.css" />
     <Content Include="Content\logo.png" />
@@ -315,8 +316,10 @@
     <Content Include="Content\sheetJS\xlsx.full.min.map" />
     <Content Include="Content\sheetJS\xlsx.min.map" />
     <None Include="Properties\PublishProfiles\mswd - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mswd - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mswd - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datatable\dataTables.bootstrap.js" />
@@ -415,6 +418,7 @@
     <Content Include="Views\Inquiries\Details.cshtml" />
     <Content Include="Views\Inquiries\Edit.cshtml" />
     <Content Include="Views\Inquiries\Index.cshtml" />
+    <Content Include="Views\Clients\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

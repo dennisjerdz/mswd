@@ -1,0 +1,275 @@
+﻿@model MSWD.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Reports";
+}
+
+<div class="container">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-md-12 header-page">
+                <a href="#">@ViewBag.Title</a>
+                @*
+                    &emsp;>&emsp;<font class="red-highlight">Apply (Click one of the options to start)</font>
+                *@
+            </div>
+
+            @*
+                <div class="col-md-2">
+                    @if (Model.SeniorCitizen != null)
+                    {
+                        <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Senior Citizen Info" href="@Url.Action("View","SeniorCitizens", new { @id = Model.ClientId })">Senior Citizen <span class="glyphicon glyphicon-share"></span></a>
+                    }
+
+                    @if (Model.SoloParent != null)
+                    {
+                        <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View Solo Parent Info" href="@Url.Action("View","SoloParents", new { @id = Model.ClientId })">Solo Parent <span class="glyphicon glyphicon-share"></span></a>
+                    }
+
+                    @if (Model.Pwd != null)
+                    {
+                        <a class="btn btn-warning btn-block" data-toggle="tooltip" title="View PWD Info" href="@Url.Action("View","PWDs", new { @id = Model.ClientId })">PWD <span class="glyphicon glyphicon-share"></span></a>
+                    }
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNoteModal">
+                        Add Note <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#addNumberModal">
+                        Add Number <span class="glyphicon glyphicon-phone"></span>
+                    </button>
+                </div>
+            *@
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mswd-window-subtle mswd-marginTop0">
+                <h4># of Applicants per Month <small style="color:#9c9c9c">Total Applicants: @ViewBag.totalCount</small></h4>
+                <br />
+                <canvas id="bar1" style="width:100%;"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mswd-window-subtle mswd-marginTop0">
+                <h4># of Applicants per Client type</h4>
+                <br />
+                <canvas id="donut1" style="width:100%;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mswd-window-subtle mswd-marginTop0">
+                <h4># of Pending, Done Applications per Client Type</h4>
+                <br />
+                <canvas id="bar3" style="width:100%;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mswd-window-subtle mswd-marginTop0">
+                <h4># of Inquiries per Month <small style="color:#9c9c9c">Total Inquiries: @ViewBag.totalICount</small></h4>
+                <br />
+                <canvas id="bar2" style="width:100%;"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mswd-window-subtle mswd-marginTop0">
+                <h4># of Inquiries per Category</h4>
+                <br />
+                <canvas id="donut2" style="width:100%;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/chartJS/Chart.min.js"></script>
+
+    <script>
+        var bar1 = document.getElementById("bar1").getContext('2d');
+
+        var bar1render = new Chart(bar1, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: '# of Client Applications this Month',
+                    data: [@ViewBag.janCount, @ViewBag.febCount, @ViewBag.marCount, @ViewBag.aprCount, @ViewBag.mayCount, @ViewBag.junCount,
+                        @ViewBag.julCount,@ViewBag.augCount, @ViewBag.septCount, @ViewBag.octCount, @ViewBag.novCount, @ViewBag.decCount],
+                    backgroundColor: [
+                        'rgba(80, 200, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)',
+                        'rgba(38, 80, 27, 0.2)','rgba(41, 205, 225, 0.2)','rgba(177, 103, 23, 0.2)',
+                        'rgba(199, 165, 5, 0.2)','rgba(87, 68, 150, 0.2)','rgba(120, 211, 92, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(80, 200, 132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)',
+                        'rgba(38, 80, 27, 1)','rgba(41, 205, 225,1)','rgba(177, 103, 23, 1)',
+                        'rgba(199, 165, 5, 1)','rgba(87, 68, 150, 1)','rgba(120, 211, 92, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        var donut1 = document.getElementById("donut1").getContext('2d');
+
+        var donut1render = new Chart(donut1, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [@ViewBag.scCount, @ViewBag.spCount, @ViewBag.pwdCount],
+                    backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                            'rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: [
+                    'Senior Citizen',
+                    'Solo Parent',
+                    'PWD'
+                ]
+            }
+        });
+    </script>
+
+    <script>
+        var bar2 = document.getElementById("bar2").getContext('2d');
+
+        var bar2render = new Chart(bar2, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: '# of Client Applications this Month',
+                    data: [@ViewBag.janICount, @ViewBag.febICount, @ViewBag.marICount, @ViewBag.aprICount, @ViewBag.mayICount, @ViewBag.junICount,
+                        @ViewBag.julICount,@ViewBag.augICount, @ViewBag.septICount, @ViewBag.octICount, @ViewBag.novICount, @ViewBag.decICount],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)',
+                        'rgba(38, 80, 27, 0.2)','rgba(41, 205, 225, 0.2)','rgba(177, 103, 23, 0.2)',
+                        'rgba(199, 165, 5, 0.2)','rgba(87, 68, 150, 0.2)','rgba(120, 211, 92, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)',
+                        'rgba(38, 80, 27, 1)','rgba(41, 205, 225,1)','rgba(177, 103, 23, 1)',
+                        'rgba(199, 165, 5, 1)','rgba(87, 68, 150, 1)','rgba(120, 211, 92, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        var donut2 = document.getElementById("donut2").getContext('2d');
+
+        var donut2render = new Chart(donut2, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [@ViewBag.questionCount, @ViewBag.requirementCount],
+                    backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)','rgba(78, 154, 224, 0.2)'
+                    ],
+                    borderColor: [
+                            'rgba(255,99,132,1)','rgba(78, 154, 224, 1)'
+                    ],
+                    borderWidth: 1
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: [
+                    'Inquiry - Question',
+                    'Inquiry - Requirement'
+                ]
+            }
+        });
+    </script>
+
+    <script>
+        var bar3 = document.getElementById("bar3").getContext('2d');
+
+        var bar3render = new Chart(bar3, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["Senior Citizen Pending", "Senior Citizen In-Progress", "Senior Citizen Approved", "Solo Parent Pending", "Solo Parent In-Progress", "Solo Parent Approved", "PWD Pending", "PWD In-Progress", "PWD Approved"],
+                datasets: [{
+                    label: '# of Applications',
+                    data: [@ViewBag.scPending, @ViewBag.scInProgress, @ViewBag.scApproved,
+                        @ViewBag.spPending, @ViewBag.spInProgress, @ViewBag.spApproved,
+                        @ViewBag.pwdPending, @ViewBag.pwdInProgress, @ViewBag.pwdApproved
+                    ],
+                    backgroundColor: [
+                        'rgba(41, 205, 225, 0.2)', 'rgba(41, 205, 225, 0.2)', 'rgba(41, 205, 225, 0.2)',
+                        'rgba(153, 102, 255, 0.2)','rgba(153, 102, 255, 0.2)','rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)','rgba(255, 159, 64, 0.2)','rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(41, 205, 225, 1)', 'rgba(41, 205, 225, 1)', 'rgba(41, 205, 225, 1)',
+                        'rgba(153, 102, 255, 1)', 'rgba(153, 102, 255, 1)', 'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+}
