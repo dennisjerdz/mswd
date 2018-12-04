@@ -153,21 +153,26 @@ namespace MSWD.Controllers
 
                 int[] dbChildEntities = db.ClientBeneficiary.Where(b => b.ClientId == client.ClientId).Select(c=>c.ClientBeneficiaryId).ToArray();
 
-                foreach (var item in client.ClientBeneficiaries)
+                if (client.ClientBeneficiaries != null)
                 {
-                    if (dbChildEntities.Contains(item.ClientBeneficiaryId)) {
-                        db.Entry(item).State = EntityState.Modified;
-                    }else
+                    foreach (var item in client.ClientBeneficiaries)
                     {
-                        db.ClientBeneficiary.Add(item);
+                        if (dbChildEntities.Contains(item.ClientBeneficiaryId))
+                        {
+                            db.Entry(item).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            db.ClientBeneficiary.Add(item);
+                        }
                     }
+
+                    int[] childEntities = client.ClientBeneficiaries.Select(c => c.ClientBeneficiaryId).ToArray();
+
+                    var deleteChildEntities = db.ClientBeneficiary.Where(b => !childEntities.Contains(b.ClientBeneficiaryId));
+
+                    db.ClientBeneficiary.RemoveRange(deleteChildEntities);
                 }
-
-                int[] childEntities = client.ClientBeneficiaries.Select(c => c.ClientBeneficiaryId).ToArray();
-
-                var deleteChildEntities = db.ClientBeneficiary.Where(b => !childEntities.Contains(b.ClientBeneficiaryId));
-
-                db.ClientBeneficiary.RemoveRange(deleteChildEntities);
 
                 /*foreach (var item in client.ClientBeneficiaries) {
                     db.Entry(item).State = EntityState.Modified;

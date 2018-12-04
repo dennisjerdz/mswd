@@ -290,6 +290,11 @@
     <Content Include="Content\chartJS\Chart.min.js" />
     <Content Include="Content\datatable\dataTables.bootstrap.min.css" />
     <Content Include="Content\datatable\jquery-ui.min.css" />
+    <Content Include="Content\Home\Senior2.jpg" />
+    <Content Include="Content\Home\Senior3.jpg" />
+    <Content Include="Content\Home\Senior5.jpg" />
+    <Content Include="Content\Home\Senior4.jpg" />
+    <Content Include="Content\Home\Senior1.jpg" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\sheetJS\cpexcel.js" />
     <Content Include="Content\sheetJS\jszip.js" />
@@ -317,9 +322,11 @@
     <Content Include="Content\sheetJS\xlsx.min.map" />
     <None Include="Properties\PublishProfiles\mswd - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - FTP %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mswd - FTP %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\mswd - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\mswd - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datatable\dataTables.bootstrap.js" />

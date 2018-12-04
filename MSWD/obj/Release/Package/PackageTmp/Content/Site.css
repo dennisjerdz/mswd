@@ -314,3 +314,11 @@ body >*{
 .alert .btn span.glyphicon{
     font-size:1em;
 }
+
+.mswd-carousel .item{
+    background-color:black;
+}
+
+.mswd-carousel{
+    background-color:black;
+}

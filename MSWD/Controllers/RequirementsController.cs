@@ -204,6 +204,14 @@ namespace MSWD.Controllers
             return View(requirement);
         }
 
+        public ActionResult DeleteComment(int id)
+        {
+            RequirementComment r = db.RequirementComments.Find(id);
+            db.RequirementComments.Remove(r);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { @id = r.RequirementId });
+        }
+
         // GET: Requirements/Delete/5
         public ActionResult Delete(int? id)
         {
