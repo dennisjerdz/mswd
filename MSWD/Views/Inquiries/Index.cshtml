@@ -4,6 +4,42 @@
     ViewBag.Title = "Inquiries";
 }
 
+<div id="helpModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Verification Guide</h4>
+            </div>
+            <div class="modal-body">
+                <h3>To receive SMS alerts;</h3>
+                <ol>
+                    <li>Text INFO to 21580678</li>
+                    <li>Reply YES</li>
+                </ol>
+
+                <h3>SMS commands (Not Case-sensitive)</h3>
+                <ul>
+                    <li>Inquire MESSAGE</li>
+                    <li>Application Status</li>
+                    <li>FAQ</li>
+                    <li>Learn More</li>
+                </ul>
+
+                <h3>Mobile Number Status</h3>
+                <ul>
+                    <li>ENABLED - will receive SMS alerts or replies</li>
+                    <li>DISABLED - will not receive SMS alerts or replies</li>
+                    <li><strong>Only one ENABLED Mobile Number</strong> can receive SMS alerts.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="inquiryModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         @using (Html.BeginForm("AddInquiry", "Inquiries", FormMethod.Post))
@@ -94,6 +130,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-danger"><strong>Error: </strong> @ViewBag.Error</div>
+            </div>
+        </div>
+    }
+
+    @if (User.IsInRole("Client"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning" style="padding: 6px 18px; border-color:#ffcc25;">
+                    <h5>
+                        <strong><span class="glyphicon glyphicon-info-sign"></span> Instructions:</strong>
+                        &nbsp;
+                        To Add an Inquiry, click Add Inquiry button on the top-right. Choose an Inquiry Category and fillout the field with your inquiry.
+                        <br />
+                        Inquiries can also be sent through sms, click <a href="#" data-toggle="modal" data-target="#helpModal">here</a> for instructions.
+                    </h5>
+                </div>
             </div>
         </div>
     }

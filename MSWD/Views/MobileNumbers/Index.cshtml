@@ -15,7 +15,7 @@
                 </div>
                 <div class="modal-body">
                     <label class="control-label">Mobile Number Format: 11 Digit Mobile Number; 09xxxxxxxxx</label>
-                    <input class="form-control" name="MobileNumber" placeholder="Input here" type="number" value="" />
+                    <input class="form-control" name="MobileNumber" placeholder="Input here" value="" pattern="[0-9]{1,11}" maxlength="11" title="11 Digit Numbers only."/>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Submit</button>
@@ -101,6 +101,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-danger"><strong>Error: </strong> @ViewBag.Error</div>
+            </div>
+        </div>
+    }
+
+    @if (User.IsInRole("Client"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning" style="padding: 6px 18px; border-color:#ffcc25;">
+                    <h5>
+                        <strong><span class="glyphicon glyphicon-info-sign"></span> Instructions:</strong>
+                        &nbsp;
+                        To add a Mobile Number, click Add Number Button on the top-right. Fillout the field with your 11 digit mobile number and submit.
+                        <br />
+                        To verify your mobile number and view sms codes, click <a href="#" data-toggle="modal" data-target="#helpModal">here</a> for instructions.
+                    </h5>
+                </div>
             </div>
         </div>
     }

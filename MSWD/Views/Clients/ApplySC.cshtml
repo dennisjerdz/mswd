@@ -37,6 +37,17 @@
                             <div class="col-md-12">
                                 <h4>General Info</h4>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="alert alert-warning" style="padding: 6px 18px; border-color:#ffcc25;">
+                                    <h5>
+                                        <strong><span class="glyphicon glyphicon-info-sign"></span> Instructions:</strong>
+                                        &nbsp;
+                                        Please fillout the fields with <font style="color:#ff3737">*</font>. Upon submitting, you will be redirected to the Requirements page.
+                                    </h5>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -61,26 +72,35 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-3">
-                            @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @type = "Date" } })
+                        <div class="col-md-4">
+                            <label class="control-label">Birth Date <font style="color:#ff3737">*</font></label>
+                            @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control birthDate", @type = "Date" } })
                             @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="col-md-3">
-                            @Html.LabelFor(model => model.BirthPlace, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-4">
+                            <label class = "control-label">Age</label>
+                            <input class="age form-control" readonly />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="control-label">Birth Place <font style="color:#ff3737">*</font></label>
                             @Html.EditorFor(model => model.BirthPlace, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.BirthPlace, "", new { @class = "text-danger" })
                         </div>
+                    </div>
 
-                        <div class="col-md-3">
-                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label" })
+                    <br /><br />
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="control-label">Gender <font style="color:#ff3737">*</font></label>
                             @Html.DropDownListFor(model => model.Gender, lists.GenderList, "-- Select Gender --", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="col-md-3">
-                            @Html.LabelFor(model => model.CivilStatus, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            <label class="control-label">Civil Status <font style="color:#ff3737">*</font></label>
                             @Html.DropDownListFor(model => model.CivilStatus, lists.CivilStatusList, "-- Select Status --", new { @class = "form-control civil-status-input" })
                             @Html.ValidationMessageFor(model => model.CivilStatus, "", new { @class = "text-danger" })
                         </div>
@@ -90,7 +110,7 @@
 
                     <div class="form-group">
                         <div class="col-md-6">
-                            @Html.LabelFor(model => model.CityAddress, htmlAttributes: new { @class = "control-label" })
+                            <label class="control-label">City Address <font style="color:#ff3737">*</font></label>
                             @Html.EditorFor(model => model.CityAddress, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.CityAddress, "", new { @class = "text-danger" })
                         </div>
@@ -204,7 +224,7 @@
 
                                 <div class="col-md-3">
                                     @Html.LabelFor(model => model.ClientBeneficiaries[0].Relationship, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].Relationship, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.ClientBeneficiaries[0].Relationship, new { htmlAttributes = new { @class = "form-control relationship" } })
                                     @Html.ValidationMessageFor(model => model.ClientBeneficiaries[0].Relationship, "", new { @class = "text-danger" })
                                 </div>
 
@@ -262,6 +282,48 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+        $(".birthDate").on("change", function (e) {
+            var today = new Date();
+            var birthDate = new Date($(this).val());
+
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            $(".age").val(age);
+
+            if (age < 0) {
+                alert("Invalid Birth Date; Date exceeded current date.");
+                $(this).val("");
+                $(".age").val("");
+            }
+
+            if (age < 60) {
+                alert("The minimum age required for Senior Citizen is 60, please update the Birth Date.");
+                $(this).val("");
+                $(".age").val("");
+            }
+        });
+
+        $(document).on("keyup", ".relationship", function () {
+            if ($(this).val().toUpperCase() == "COUSIN") {
+                var cousinCount = 0;
+
+                $(".relationship").each(function (e, v) {
+                    if ($(this).val().toUpperCase() == "COUSIN") {
+                        cousinCount++;
+                    }
+                });
+
+                if (cousinCount > 2) {
+                    alert("Cousin Dependents are only limited to 2.");
+                    $(this).val("");
+                }
+            }
+        });
+
         $(".deduct-beneficiary").click(function () {
             var i = $(".row-beneficiary").length;
 
@@ -286,7 +348,7 @@
                         "</div>" +
                         "<div class='col-md-3'>" +
                             "<label class='control-label'>Relationship</label>" +
-                            "<input class='form-control' name='ClientBeneficiaries[" + i + "].Relationship' />" +
+                            "<input class='form-control relationship' name='ClientBeneficiaries[" + i + "].Relationship' />" +
                         "</div>" +
                         "<div class='col-md-3'>" +
                             "<label class='control-label'>BirthDate</label>" +

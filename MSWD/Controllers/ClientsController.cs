@@ -614,62 +614,65 @@ namespace MSWD.Controllers
             var spl = db.SoloParents.ToList();
             var pwdl = db.Pwds.ToList();
 
+            int year = 2018;
+
             if (id != null)
             {
-
-            }
-            else
-            {
-                ViewBag.janCount = clients.Where(c => c.DateCreated.Month == 1 && c.DateCreated.Year == 2018).Count();
-                ViewBag.febCount = clients.Where(c => c.DateCreated.Month == 2 && c.DateCreated.Year == 2018).Count();
-                ViewBag.marCount = clients.Where(c => c.DateCreated.Month == 3 && c.DateCreated.Year == 2018).Count();
-                ViewBag.aprCount = clients.Where(c => c.DateCreated.Month == 4 && c.DateCreated.Year == 2018).Count();
-                ViewBag.mayCount = clients.Where(c => c.DateCreated.Month == 5 && c.DateCreated.Year == 2018).Count();
-                ViewBag.junCount = clients.Where(c => c.DateCreated.Month == 6 && c.DateCreated.Year == 2018).Count();
-                ViewBag.julCount = clients.Where(c => c.DateCreated.Month == 7 && c.DateCreated.Year == 2018).Count();
-                ViewBag.augCount = clients.Where(c => c.DateCreated.Month == 8 && c.DateCreated.Year == 2018).Count();
-                ViewBag.septCount = clients.Where(c => c.DateCreated.Month == 9 && c.DateCreated.Year == 2018).Count();
-                ViewBag.octCount = clients.Where(c => c.DateCreated.Month == 10 && c.DateCreated.Year == 2018).Count();
-                ViewBag.novCount = clients.Where(c => c.DateCreated.Month == 11 && c.DateCreated.Year == 2018).Count();
-                ViewBag.decCount = clients.Where(c => c.DateCreated.Month == 12 && c.DateCreated.Year == 2018).Count();
-
-                ViewBag.totalCount = clients.Count();
-
-                ViewBag.scCount = clients.Where(c => c.SeniorCitizen != null).Count();
-                ViewBag.spCount = clients.Where(c => c.SoloParent != null).Count();
-                ViewBag.pwdCount = clients.Where(c => c.Pwd != null).Count();
-
-                ViewBag.janICount = inquiries.Where(c => c.DateCreated.Month == 1 && c.DateCreated.Year == 2018).Count();
-                ViewBag.febICount = inquiries.Where(c => c.DateCreated.Month == 2 && c.DateCreated.Year == 2018).Count();
-                ViewBag.marICount = inquiries.Where(c => c.DateCreated.Month == 3 && c.DateCreated.Year == 2018).Count();
-                ViewBag.aprICount = inquiries.Where(c => c.DateCreated.Month == 4 && c.DateCreated.Year == 2018).Count();
-                ViewBag.mayICount = inquiries.Where(c => c.DateCreated.Month == 5 && c.DateCreated.Year == 2018).Count();
-                ViewBag.junICount = inquiries.Where(c => c.DateCreated.Month == 6 && c.DateCreated.Year == 2018).Count();
-                ViewBag.julICount = inquiries.Where(c => c.DateCreated.Month == 7 && c.DateCreated.Year == 2018).Count();
-                ViewBag.augICount = inquiries.Where(c => c.DateCreated.Month == 8 && c.DateCreated.Year == 2018).Count();
-                ViewBag.septICount = inquiries.Where(c => c.DateCreated.Month == 9 && c.DateCreated.Year == 2018).Count();
-                ViewBag.octICount = inquiries.Where(c => c.DateCreated.Month == 10 && c.DateCreated.Year == 2018).Count();
-                ViewBag.novICount = inquiries.Where(c => c.DateCreated.Month == 11 && c.DateCreated.Year == 2018).Count();
-                ViewBag.decICount = inquiries.Where(c => c.DateCreated.Month == 12 && c.DateCreated.Year == 2018).Count();
-
-                ViewBag.totalICount = inquiries.Count();
-
-                ViewBag.scPending = scl.Where(c => c.Status == "Pending").Count();
-                ViewBag.scInProgress = scl.Where(c => c.Status != "Pending" && c.Status != "Approved").Count();
-                ViewBag.scApproved = scl.Where(c => c.Status == "Approved").Count();
-
-                ViewBag.spPending = spl.Where(c => c.Status == "Pending").Count();
-                ViewBag.spInProgress = spl.Where(c => c.Status != "Pending" && c.Status != "Approved").Count();
-                ViewBag.spApproved = spl.Where(c => c.Status == "Approved").Count();
-
-                ViewBag.pwdPending = pwdl.Where(c => c.Status == "Pending").Count();
-                ViewBag.pwdInProgress = pwdl.Where(c => c.Status != "Pending" && c.Status != "Approved").Count();
-                ViewBag.pwdApproved = pwdl.Where(c => c.Status == "Approved").Count();
-
-                ViewBag.questionCount = inquiries.Where(c => c.Category == "Question").Count();
-                ViewBag.requirementCount = inquiries.Where(c => c.Category == "Requirement").Count();
+                year = id.Value;
             }
 
+            ViewBag.year = year;
+
+            ViewBag.janCount = clients.Where(c => c.DateCreated.Month == 1 && c.DateCreated.Year == year).Count();
+            ViewBag.febCount = clients.Where(c => c.DateCreated.Month == 2 && c.DateCreated.Year == year).Count();
+            ViewBag.marCount = clients.Where(c => c.DateCreated.Month == 3 && c.DateCreated.Year == year).Count();
+            ViewBag.aprCount = clients.Where(c => c.DateCreated.Month == 4 && c.DateCreated.Year == year).Count();
+            ViewBag.mayCount = clients.Where(c => c.DateCreated.Month == 5 && c.DateCreated.Year == year).Count();
+            ViewBag.junCount = clients.Where(c => c.DateCreated.Month == 6 && c.DateCreated.Year == year).Count();
+            ViewBag.julCount = clients.Where(c => c.DateCreated.Month == 7 && c.DateCreated.Year == year).Count();
+            ViewBag.augCount = clients.Where(c => c.DateCreated.Month == 8 && c.DateCreated.Year == year).Count();
+            ViewBag.septCount = clients.Where(c => c.DateCreated.Month == 9 && c.DateCreated.Year == year).Count();
+            ViewBag.octCount = clients.Where(c => c.DateCreated.Month == 10 && c.DateCreated.Year == year).Count();
+            ViewBag.novCount = clients.Where(c => c.DateCreated.Month == 11 && c.DateCreated.Year == year).Count();
+            ViewBag.decCount = clients.Where(c => c.DateCreated.Month == 12 && c.DateCreated.Year == year).Count();
+
+            ViewBag.tableTotalCount = clients.Where(c => c.DateCreated.Year == year).Count();
+            ViewBag.totalCount = clients.Count();
+
+            ViewBag.scCount = clients.Where(c => c.SeniorCitizen != null).Count();
+            ViewBag.spCount = clients.Where(c => c.SoloParent != null).Count();
+            ViewBag.pwdCount = clients.Where(c => c.Pwd != null).Count();
+
+            ViewBag.janICount = inquiries.Where(c => c.DateCreated.Month == 1 && c.DateCreated.Year == year).Count();
+            ViewBag.febICount = inquiries.Where(c => c.DateCreated.Month == 2 && c.DateCreated.Year == year).Count();
+            ViewBag.marICount = inquiries.Where(c => c.DateCreated.Month == 3 && c.DateCreated.Year == year).Count();
+            ViewBag.aprICount = inquiries.Where(c => c.DateCreated.Month == 4 && c.DateCreated.Year == year).Count();
+            ViewBag.mayICount = inquiries.Where(c => c.DateCreated.Month == 5 && c.DateCreated.Year == year).Count();
+            ViewBag.junICount = inquiries.Where(c => c.DateCreated.Month == 6 && c.DateCreated.Year == year).Count();
+            ViewBag.julICount = inquiries.Where(c => c.DateCreated.Month == 7 && c.DateCreated.Year == year).Count();
+            ViewBag.augICount = inquiries.Where(c => c.DateCreated.Month == 8 && c.DateCreated.Year == year).Count();
+            ViewBag.septICount = inquiries.Where(c => c.DateCreated.Month == 9 && c.DateCreated.Year == year).Count();
+            ViewBag.octICount = inquiries.Where(c => c.DateCreated.Month == 10 && c.DateCreated.Year == year).Count();
+            ViewBag.novICount = inquiries.Where(c => c.DateCreated.Month == 11 && c.DateCreated.Year == year).Count();
+            ViewBag.decICount = inquiries.Where(c => c.DateCreated.Month == 12 && c.DateCreated.Year == year).Count();
+
+            ViewBag.tableITotalCount = inquiries.Where(c => c.DateCreated.Year == year).Count();
+            ViewBag.totalICount = inquiries.Count();
+
+            ViewBag.scPending = scl.Where(c => c.Status == "Pending").Count();
+            ViewBag.scInProgress = scl.Where(c => c.Status != "Pending" && c.Status != "Approved").Count();
+            ViewBag.scApproved = scl.Where(c => c.Status == "Approved").Count();
+
+            ViewBag.spPending = spl.Where(c => c.Status == "Pending").Count();
+            ViewBag.spInProgress = spl.Where(c => c.Status != "Pending" && c.Status != "Approved").Count();
+            ViewBag.spApproved = spl.Where(c => c.Status == "Approved").Count();
+
+            ViewBag.pwdPending = pwdl.Where(c => c.Status == "Pending").Count();
+            ViewBag.pwdInProgress = pwdl.Where(c => c.Status != "Pending" && c.Status != "Approved").Count();
+            ViewBag.pwdApproved = pwdl.Where(c => c.Status == "Approved").Count();
+
+            ViewBag.questionCount = inquiries.Where(c => c.Category == "Question").Count();
+            ViewBag.requirementCount = inquiries.Where(c => c.Category == "Requirement").Count();
 
             return View();
         }

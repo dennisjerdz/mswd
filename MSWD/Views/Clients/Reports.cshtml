@@ -8,7 +8,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-md-12 header-page">
-                <a href="#">@ViewBag.Title</a>
+                <a href="#">@ViewBag.Title</a> <button class="btn btn-info btn-xs" onclick="window.print();">Print <span class="glyphicon glyphicon-print"></span></button>
                 @*
                     &emsp;>&emsp;<font class="red-highlight">Apply (Click one of the options to start)</font>
                 *@
@@ -50,7 +50,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="mswd-window-subtle mswd-marginTop0">
-                <h4># of Applicants per Month <small style="color:#9c9c9c">Total Applicants: @ViewBag.totalCount</small></h4>
+                <h4>Applicants per Month this Year<small style="color:#9c9c9c">Total Applicants (All-Time): @ViewBag.totalCount</small></h4>
                 <br />
                 <canvas id="bar1" style="width:100%;"></canvas>
             </div>
@@ -58,7 +58,7 @@
 
         <div class="col-md-6">
             <div class="mswd-window-subtle mswd-marginTop0">
-                <h4># of Applicants per Client type</h4>
+                <h4>Applicants per Client type</h4>
                 <br />
                 <canvas id="donut1" style="width:100%;"></canvas>
             </div>
@@ -68,17 +68,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mswd-window-subtle mswd-marginTop0">
-                <h4># of Pending, Done Applications per Client Type</h4>
+                <h4>Pending, Done Applications per Client Type</h4>
                 <br />
                 <canvas id="bar3" style="width:100%;"></canvas>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-bottom:40px;">
         <div class="col-md-6">
             <div class="mswd-window-subtle mswd-marginTop0">
-                <h4># of Inquiries per Month <small style="color:#9c9c9c">Total Inquiries: @ViewBag.totalICount</small></h4>
+                <h4>Inquiries per Month this Year<small style="color:#9c9c9c">Total Inquiries (All-Time): @ViewBag.totalICount</small></h4>
                 <br />
                 <canvas id="bar2" style="width:100%;"></canvas>
             </div>
@@ -86,13 +86,249 @@
 
         <div class="col-md-6">
             <div class="mswd-window-subtle mswd-marginTop0">
-                <h4># of Inquiries per Category</h4>
+                <h4>Inquiries per Category</h4>
                 <br />
                 <canvas id="donut2" style="width:100%;"></canvas>
             </div>
         </div>
     </div>
+
+    <div class="row tableView">
+        <div class="tableView" style="margin-bottom:40px;">
+
+            <div class="reportTable">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th colspan="3"># of Applicants, Inquiries Per Month for Year @ViewBag.year</th>
+                            </tr>
+                        </thead>
+
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th># of Applicants</th>
+                                <th># of Inquiries</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Jan</td>
+                                <td>@ViewBag.janCount</td>
+                                <td>@ViewBag.janICount</td>
+                            </tr>
+                            <tr>
+                                <td>Feb</td>
+                                <td>@ViewBag.febCount</td>
+                                <td>@ViewBag.febICount</td>
+                            </tr>
+                            <tr>
+                                <td>Mar</td>
+                                <td>@ViewBag.marCount</td>
+                                <td>@ViewBag.marICount</td>
+                            </tr>
+                            <tr>
+                                <td>Apr</td>
+                                <td>@ViewBag.aprCount</td>
+                                <td>@ViewBag.aprICount</td>
+                            </tr>
+                            <tr>
+                                <td>May</td>
+                                <td>@ViewBag.mayCount</td>
+                                <td>@ViewBag.mayICount</td>
+                            </tr>
+                            <tr>
+                                <td>Jun</td>
+                                <td>@ViewBag.junCount</td>
+                                <td>@ViewBag.junICount</td>
+                            </tr>
+                            <tr>
+                                <td>Jul</td>
+                                <td>@ViewBag.julCount</td>
+                                <td>@ViewBag.julICount</td>
+                            </tr>
+                            <tr>
+                                <td>Aug</td>
+                                <td>@ViewBag.augCount</td>
+                                <td>@ViewBag.augICount</td>
+                            </tr>
+                            <tr>
+                                <td>Sep</td>
+                                <td>@ViewBag.septCount</td>
+                                <td>@ViewBag.septICount</td>
+                            </tr>
+                            <tr>
+                                <td>Oct</td>
+                                <td>@ViewBag.octCount</td>
+                                <td>@ViewBag.octICount</td>
+                            </tr>
+                            <tr>
+                                <td>Nov</td>
+                                <td>@ViewBag.novCount</td>
+                                <td>@ViewBag.novICount</td>
+                            </tr>
+                            <tr>
+                                <td>Dec</td>
+                                <td>@ViewBag.decCount</td>
+                                <td>@ViewBag.decICount</td>
+                            </tr>
+                        </tbody>
+
+                        <thead>
+                            <tr>
+                                <th>Total</th>
+                                <th>@ViewBag.tableTotalCount</th>
+                                <th>@ViewBag.tableITotalCount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="reportTable">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th colspan="2"># of Inquiries per Category for Year @ViewBag.year</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Senior Citizen Pending</td><td>@ViewBag.scPending</td>
+                            </tr>
+                            <tr>
+                                <td>Senior Citizen In-Progress</td><td>@ViewBag.scInProgress</td>
+                            </tr>
+                            <tr>
+                                <td>Senior Citize Approved</td><td>@ViewBag.scApproved</td>
+                            </tr>
+                            <tr>
+                                <td>Solo Parent Pending</td><td>@ViewBag.spPending</td>
+                            </tr>
+                            <tr>
+                                <td>Solo Parent In-Progress</td><td>@ViewBag.spInProgress</td>
+                            </tr>
+                            <tr>
+                                <td>Solo Parent Approved</td><td>@ViewBag.spApproved</td>
+                            </tr>
+                            <tr>
+                                <td>PWD Pending</td><td>@ViewBag.pwdPending</td>
+                            </tr>
+                            <tr>
+                                <td>PWD In-Progress</td><td>@ViewBag.pwdInProgress</td>
+                            </tr>
+                            <tr>
+                                <td>PWD Approved</td><td>@ViewBag.pwdApproved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="reportTable">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th colspan="2"># of Applicants per Client Type for Year @ViewBag.year</th>
+                            </tr>
+                        </thead>
+
+                        <thead>
+                            <tr>
+                                <th>Client Type</th>
+                                <th># of Applicants</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Senior Citizen</td>
+                                <td>@ViewBag.scCount</td>
+                            </tr>
+                            <tr>
+                                <td>Solo Parent</td>
+                                <td>@ViewBag.spCount</td>
+                            </tr>
+                            <tr>
+                                <td>PWD</td>
+                                <td>@ViewBag.pwdCount</td>
+                            </tr>
+                        </tbody>
+
+                        <thead>
+                            <tr>
+                                <th>Total</th>
+                                <th>
+                                    @{
+                                        ViewBag.applicantCategoryCount = ViewBag.scCount + ViewBag.spCount + ViewBag.pwdCount;
+                                    }
+
+                                    @ViewBag.applicantCategoryCount
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="reportTable">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th colspan="2"># of Applications per Client Type for Year @ViewBag.year</th>
+                            </tr>
+                        </thead>
+
+                        <thead>
+                            <tr>
+                                <th>Client Type</th><th># of Inquiries</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Inquiry Question</td><td>@ViewBag.questionCount</td>
+                            </tr>
+                            <tr>
+                                <td>Inquiry Requirement</td><td>@ViewBag.requirementCount</td>
+                            </tr>
+                        </tbody>
+
+                        <thead>
+                            <tr>
+                                <th>Total</th>
+                                <th>
+                                    @{
+                                        ViewBag.inquiryCategoryCount = ViewBag.questionCount + ViewBag.requirementCount;
+                                    }
+
+                                    @ViewBag.inquiryCategoryCount
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+@section styles{
+    <style>
+        @@media print
+        {
+            .row,.page-title { display:none; }
+            .tableView { display: block !important; }
+        }  
+    </style>  
+}
 
 @section scripts{
     <script src="~/Content/chartJS/Chart.min.js"></script>

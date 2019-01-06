@@ -46,6 +46,21 @@
 </div>
 
 <div class="container">
+    @if (User.IsInRole("Client"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning" style="padding: 6px 18px; border-color:#ffcc25;">
+                    <h5>
+                        <strong><span class="glyphicon glyphicon-info-sign"></span> Instructions:</strong>
+                        &nbsp;
+                        For pending or rejected requirements, click the book icon to navigate to upload/comments page.
+                    </h5>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row">
         <div class="table-responsive">
             <div class="col-md-12">

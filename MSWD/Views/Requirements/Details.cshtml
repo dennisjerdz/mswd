@@ -37,6 +37,23 @@
         </div>
     }
 
+    @if (User.IsInRole("Client"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning" style="padding: 6px 18px; border-color:#ffcc25;">
+                    <h5>
+                        <strong><span class="glyphicon glyphicon-info-sign"></span> Instructions:</strong>
+                        &nbsp;
+                        Click Choose File field to upload a file from your device and click Upload to submit. Once uploaded, they could be downloaded or deleted.
+                        <br />
+                        To add a comment, fillout the field and click Add Comment to submit. An sms will be sent once a requirement is reviewed.
+                    </h5>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row">
         <div class="col-md-6">
             <div class="mswd-window-subtle mswd-marginTop0 mswd-marginBot20 mswd-padding20">
