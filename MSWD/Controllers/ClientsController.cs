@@ -327,10 +327,10 @@ namespace MSWD.Controllers
             string username = User.Identity.GetUserName();
             ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
 
-            if (au.Client != null)
+            /*if (au.Client != null)
             {
                 return RedirectToAction("Apply");
-            }
+            }*/
 
             ClientEditModel ce = new ClientEditModel();
             ce.GivenName = au.GivenName;
@@ -345,48 +345,115 @@ namespace MSWD.Controllers
         [Route("SeniorCitizen/Apply")]
         public ActionResult ApplySC(ClientEditModel ce)
         {
-            Client newClient = new Client(ce);
-
-            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identity.Claims;
-
-            newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c=>c.Type=="CityId").Value);
-            newClient.DateCreated = DateTime.UtcNow.AddHours(8);
-
-            db.Clients.Add(newClient);
+            string username = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
 
             SeniorCitizen newSC = new SeniorCitizen();
-            newSC.Status = "Pending";
-            newSC.Client = newClient;
-            newSC.ApplicationDate = newClient.DateCreated;
 
-            db.SeniorCitizens.Add(newSC);
-
-            if (ce.ClientBeneficiaries != null)
+            if (au.Client != null)
             {
-                ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
-                ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
-            }
+                // if existing client
+                #region MODIFY CLIENT PROPERTIES
+                au.Client.BirthDate = ce.BirthDate;
+                au.Client.BirthPlace = ce.BirthPlace;
+                au.Client.Citizenship = ce.Citizenship;
+                au.Client.CityAddress = ce.CityAddress;
+                au.Client.CivilStatus = ce.CivilStatus;
+                au.Client.ContactNumber = ce.ContactNumber;
+                au.Client.DateOfMarriage = ce.DateOfMarriage;
+                au.Client.Gender = ce.Gender;
+                au.Client.Occupation = ce.Occupation;
+                au.Client.PlaceOfMarriage = ce.PlaceOfMarriage;
+                au.Client.ProvincialAddress = ce.ProvincialAddress;
+                au.Client.Religion = ce.Religion;
+                au.Client.SpouseBirthDate = ce.SpouseBirthDate;
+                au.Client.SpouseBluCardNo = ce.SpouseBluCardNo;
+                au.Client.SpouseName = ce.SpouseName;
+                au.Client.StartOfResidency = ce.StartOfResidency;
+                au.Client.TypeOfResidency = ce.TypeOfResidency;
+                #endregion
 
-            string email = User.Identity.GetUserName();
-            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == email);
+                // save modifications
+                db.SaveChanges();
 
-            au.ClientId = newClient.ClientId;
+                // add sc
+                newSC.Status = "Pending";
+                newSC.Client = au.Client;
+                newSC.ApplicationDate = au.Client.DateCreated;
 
-            List<Requirement> rl = new List<Requirement>{
-                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Recent Photo", Description = "Upload a recent picture of yourself" },
-                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
-            };
+                db.SeniorCitizens.Add(newSC);
 
-            db.Requirements.AddRange(rl);
+                // add beneficiaries
+                if (ce.ClientBeneficiaries != null)
+                {
+                    ce.ClientBeneficiaries.ForEach(c => c.ClientId = au.ClientId.Value);
+                    ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+                }
 
-            if (db.SaveChanges() > 1)
-            {
-                return RedirectToAction("Requirements", "Clients", null);
+                // add requirements
+                List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = au.ClientId.Value, IsDone = false, Name = "Senior Citizen Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = au.ClientId.Value, IsDone = false, Name = "Senior Citizen Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
+                };
+
+                db.Requirements.AddRange(rl);
+
+                // save
+                if (db.SaveChanges() > 1)
+                {
+                    return RedirectToAction("Requirements", "Clients", null);
+                }
+                else
+                {
+                    return View(ce);
+                }
             }
             else
             {
-                return View(ce);
+                // add client
+                Client newClient = new Client(ce);
+
+                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = identity.Claims;
+
+                newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c => c.Type == "CityId").Value);
+                newClient.DateCreated = DateTime.UtcNow.AddHours(8);
+
+                db.Clients.Add(newClient);
+
+                // add sc
+                newSC.Status = "Pending";
+                newSC.Client = newClient;
+                newSC.ApplicationDate = newClient.DateCreated;
+
+                db.SeniorCitizens.Add(newSC);
+
+                // add beneficiaries
+                if (ce.ClientBeneficiaries != null)
+                {
+                    ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+                    ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+                }
+
+                au.ClientId = newClient.ClientId;
+
+                // add requirements
+                List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Senior Citizen Supporting Document", Description = "Any of the following; Driver's License, Voter’s ID, NBI Clearance, Old Residence Certificate, Police Clearance" },
+                };
+
+                db.Requirements.AddRange(rl);
+
+                // save
+                if (db.SaveChanges() > 1)
+                {
+                    return RedirectToAction("Requirements", "Clients", null);
+                }
+                else
+                {
+                    return View(ce);
+                }
             }
         }
 
@@ -415,7 +482,77 @@ namespace MSWD.Controllers
             if (au.Client != null)
             {
                 // if existing client
+                #region MODIFY CLIENT PROPERTIES
+                au.Client.BirthDate = cpwde.BirthDate;
+                au.Client.BirthPlace = cpwde.BirthPlace;
+                au.Client.Citizenship = cpwde.Citizenship;
+                au.Client.CityAddress = cpwde.CityAddress;
+                au.Client.CivilStatus = cpwde.CivilStatus;
+                au.Client.Company = cpwde.Company;
+                au.Client.ContactNumber = cpwde.ContactNumber;
+                au.Client.DateOfMarriage = cpwde.DateOfMarriage;
+                au.Client.EducationalAttainment = cpwde.EducationalAttainment;
+                au.Client.EmploymentStatus = cpwde.EmploymentStatus;
+                au.Client.Gender = cpwde.Gender;
+                au.Client.GSISNo = cpwde.GSISNo;
+                au.Client.NatureOfEmployer = cpwde.NatureOfEmployer;
+                au.Client.Occupation = cpwde.Occupation;
+                au.Client.PhilHealthMembershipType = cpwde.PhilHealthMembershipType;
+                au.Client.PhilhealthNo = cpwde.PhilhealthNo;
+                au.Client.PlaceOfMarriage = cpwde.PlaceOfMarriage;
+                au.Client.Position = cpwde.Position;
+                au.Client.ProvincialAddress = cpwde.ProvincialAddress;
+                au.Client.Religion = cpwde.Religion;
+                au.Client.School = cpwde.School;
+                au.Client.SpouseBirthDate = cpwde.SpouseBirthDate;
+                au.Client.SpouseBluCardNo = cpwde.SpouseBluCardNo;
+                au.Client.SpouseName = cpwde.SpouseName;
+                au.Client.SSSNo = cpwde.SSSNo;
+                au.Client.StartOfResidency = cpwde.StartOfResidency;
+                au.Client.TypeOfEmployment = cpwde.TypeOfEmployment;
+                au.Client.TypeOfResidency = cpwde.TypeOfResidency;
+                au.Client.TypeOfSkill = cpwde.TypeOfSkill;
+                au.Client.YellowCardMembershipType = cpwde.YellowCardMembershipType;
+                au.Client.YellowCardNo = cpwde.YellowCardNo;
+                #endregion
 
+                // save modifications
+                db.SaveChanges();
+
+                // add pwd
+                Pwd newPWD = new Pwd();
+                newPWD.Status = "Pending";
+                newPWD.Client = au.Client;
+                newPWD.ApplicationDate = au.Client.DateCreated;
+
+                db.Pwds.Add(newPWD);
+
+                // add beneficiaries
+                if (cpwde.ClientBeneficiaries != null)
+                {
+                    cpwde.ClientBeneficiaries.ForEach(c => c.ClientId = au.Client.ClientId);
+                    cpwde.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+                }
+
+                // add requirements
+                List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "PWD Baranggay Certificate", Description = "Baranggay Certificate" },
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "PWD Medical Certificate", Description = "Medical Certificate or abstract from Physician" },
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "PWD Recent Photo", Description = "Upload a recent picture of yourself" },
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "PWD Authorization Letter", Description = "Disregard if applying by yourself" },
+                };
+
+                db.Requirements.AddRange(rl);
+
+                // save
+                if (db.SaveChanges() > 1)
+                {
+                    return RedirectToAction("Requirements", "Clients", null);
+                }
+                else
+                {
+                    return View(cpwde);
+                }
             }
             else
             {
@@ -463,8 +600,6 @@ namespace MSWD.Controllers
                     return View(cpwde);
                 }
             }
-
-            return View(cpwde);
         }
 
         [Route("SoloParent/Apply")]
@@ -523,6 +658,7 @@ namespace MSWD.Controllers
         [Route("SoloParent/Apply")]
         public ActionResult ApplySP(ClientEditModel ce)
         {
+            /*
             Client newClient = new Client(ce);
 
             ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
@@ -567,6 +703,122 @@ namespace MSWD.Controllers
             else
             {
                 return View(ce);
+            }
+            */
+
+            string username = User.Identity.GetUserName();
+            ApplicationUser au = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            SoloParent newSC = new SoloParent();
+
+            if (au.Client != null)
+            {
+                // if existing client
+                #region MODIFY CLIENT PROPERTIES
+                au.Client.BirthDate = ce.BirthDate;
+                au.Client.BirthPlace = ce.BirthPlace;
+                au.Client.Citizenship = ce.Citizenship;
+                au.Client.CityAddress = ce.CityAddress;
+                au.Client.CivilStatus = ce.CivilStatus;
+                au.Client.ContactNumber = ce.ContactNumber;
+                au.Client.DateOfMarriage = ce.DateOfMarriage;
+                au.Client.Gender = ce.Gender;
+                au.Client.Occupation = ce.Occupation;
+                au.Client.PlaceOfMarriage = ce.PlaceOfMarriage;
+                au.Client.ProvincialAddress = ce.ProvincialAddress;
+                au.Client.Religion = ce.Religion;
+                au.Client.SpouseBirthDate = ce.SpouseBirthDate;
+                au.Client.SpouseBluCardNo = ce.SpouseBluCardNo;
+                au.Client.SpouseName = ce.SpouseName;
+                au.Client.StartOfResidency = ce.StartOfResidency;
+                au.Client.TypeOfResidency = ce.TypeOfResidency;
+                #endregion
+
+                // save modifications
+                db.SaveChanges();
+
+                // add sc
+                newSC.Status = "Pending";
+                newSC.Client = au.Client;
+                newSC.ApplicationDate = au.Client.DateCreated;
+
+                db.SoloParents.Add(newSC);
+
+                // add beneficiaries
+                if (ce.ClientBeneficiaries != null)
+                {
+                    ce.ClientBeneficiaries.ForEach(c => c.ClientId = au.ClientId.Value);
+                    ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+                }
+
+                // add requirements
+                List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "Solo Parent Baranggay Certificate", Description = "Baranggay Certificate" },
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "Solo Parent Proof of Financial Status", Description = "Payslip, Bank Transactions" },
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "Solo Parent Supporting Document", Description = "Nullity of Marriage, Death Certificate" },
+                    new Requirement { ClientId = au.Client.ClientId, IsDone = false, Name = "Solo Parent Birth Certificate (Children)", Description = "Birth Certificate of your child/children" },
+               };
+
+                db.Requirements.AddRange(rl);
+
+                // save
+                if (db.SaveChanges() > 1)
+                {
+                    return RedirectToAction("Requirements", "Clients", null);
+                }
+                else
+                {
+                    return View(ce);
+                }
+            }
+            else
+            {
+                // add client
+                Client newClient = new Client(ce);
+
+                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = identity.Claims;
+
+                newClient.CityId = Convert.ToInt16(claims.FirstOrDefault(c => c.Type == "CityId").Value);
+                newClient.DateCreated = DateTime.UtcNow.AddHours(8);
+
+                db.Clients.Add(newClient);
+
+                // add sc
+                newSC.Status = "Pending";
+                newSC.Client = newClient;
+                newSC.ApplicationDate = newClient.DateCreated;
+
+                db.SoloParents.Add(newSC);
+
+                // add beneficiaries
+                if (ce.ClientBeneficiaries != null)
+                {
+                    ce.ClientBeneficiaries.ForEach(c => c.ClientId = newClient.ClientId);
+                    ce.ClientBeneficiaries.ForEach(c => db.ClientBeneficiary.Add(c));
+                }
+
+                au.ClientId = newClient.ClientId;
+
+                // add requirements
+                List<Requirement> rl = new List<Requirement>{
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Baranggay Certificate", Description = "Baranggay Certificate" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Proof of Financial Status", Description = "Payslip, Bank Transactions" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Supporting Document", Description = "Nullity of Marriage, Death Certificate" },
+                    new Requirement { ClientId = newClient.ClientId, IsDone = false, Name = "Solo Parent Birth Certificate (Children)", Description = "Birth Certificate of your child/children" }
+               };
+
+                db.Requirements.AddRange(rl);
+
+                // save
+                if (db.SaveChanges() > 1)
+                {
+                    return RedirectToAction("Requirements", "Clients", null);
+                }
+                else
+                {
+                    return View(ce);
+                }
             }
         }
 
