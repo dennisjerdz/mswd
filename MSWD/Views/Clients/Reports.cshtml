@@ -8,7 +8,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-md-12 header-page">
-                <a href="#">@ViewBag.Title</a> <button class="btn btn-info btn-xs" onclick="window.print();">Print <span class="glyphicon glyphicon-print"></span></button>
+                <a href="#">@ViewBag.Title</a> <button class="btn btn-info btn-xs print">Print <span class="glyphicon glyphicon-print"></span></button>
                 @*
                     &emsp;>&emsp;<font class="red-highlight">Apply (Click one of the options to start)</font>
                 *@
@@ -95,6 +95,15 @@
 
     <div class="row tableView">
         <div class="tableView" style="margin-bottom:40px;">
+            <div class="report-logo">
+                <div class="col-md-12">
+                    <center>
+                        <img src="~/Content/logo.png" />
+                    </center>
+                    <br />
+                    <br />
+                </div>
+            </div>
 
             <div class="reportTable">
                 <div class="col-md-12">
@@ -316,22 +325,47 @@
                 </div>
             </div>
 
+            <div class="report-timestamp-container">
+                <div class="col-md-6 col-md-offset-6" style="text-align:right;">
+                    <strong>
+                        <span class="report-user"></span>
+                    </strong>
+                    <br />
+                    <span class="report-timestamp"></span>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 @section styles{
     <style>
+        .report-logo,.report-timestamp-container{
+            display:none;
+        }
+
         @@media print
         {
             .row,.page-title { display:none; }
             .tableView { display: block !important; }
+            .report-logo,.report-timestamp-container{
+                display:block !important;
+            }
         }  
     </style>  
 }
 
 @section scripts{
     <script src="~/Content/chartJS/Chart.min.js"></script>
+
+    <script>
+        $(".print").click(function () {
+            $(".report-user").html("Created by: @ViewBag.loggedInUserName");
+            $(".report-timestamp").html("@DateTime.UtcNow.AddHours(8).ToString("MM/dd/yyyy hh:mm tt")");
+            window.print();
+        });
+    </script>
 
     <script>
         var bar1 = document.getElementById("bar1").getContext('2d');

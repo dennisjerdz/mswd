@@ -860,6 +860,10 @@ namespace MSWD.Controllers
 
         public ActionResult Reports(int? id)
         {
+            string email = User.Identity.Name;
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Email == email);
+            ViewBag.loggedInUserName = user.getFullName();
+
             var clients = db.Clients.ToList();
             var inquiries = db.Inquiries.ToList();
             var scl = db.SeniorCitizens.ToList();
